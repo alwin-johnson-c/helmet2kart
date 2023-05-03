@@ -356,12 +356,6 @@ router.get('/delete-banner/:id', verifyAdminLogin, (req, res) => {
   })
 });
 
-// productOfferGet:
-// router.get("/product-offers", verifyAdminLogin,adminController.productOfferGet );
-// router.post("/product-offers", verifyAdminLogin,adminController.productOfferPost);
-// // edit prod offer
-// router.get("/edit-prodOffer/:_id", verifyAdminLogin,adminController.editProductOfferGet);
-// router.post("/edit-prodOffer/:_id", verifyAdminLogin,adminController.editProductOfferPost );
 
 router.get('/product-offers',verifyAdminLogin, async (req, res) => {
   let allProducts = await productHelpers.getAllProducts();
