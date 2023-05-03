@@ -1,0 +1,119 @@
+
+    <section>
+  <style>
+    .group {
+      display: table;
+      width: 100%;
+    }
+    .item {
+      display: table-cell;
+    }
+    .text {
+      white-space: nowrap;
+      width: 1%;
+      padding: 0 10px;
+    }
+    .line {
+      border-bottom: 1px solid #000;
+      position: relative;
+      top: -.5em;
+    }
+  </style>
+  <div class="container mt-5 ">
+    <div class="row justify-content-center ">
+      <div class="card col-md-4 p-b-55 border rounded" style="background-color:rgb(255, 255, 255);">
+
+        <div>
+          <h2 class="text-dark text-center mt-2">Login</h2>
+        </div>
+        {{!-- {{#if blockErr}}
+        <p class="error text-danger">{{blockErr}}</p>
+        {{/if}}
+
+        {{#if passwordErr}}
+        <p class="error text-danger">{{passwordErr}}</p>
+        {{/if}}
+
+        {{#if noUserErr}}
+        <p class="error text-danger">{{noUserErr}}</p>
+        {{/if}} --}}
+
+        <form action="/login" method="post" id="login">
+        {{#if loginErr}}
+        <p class="error">{{loginErr}}</p>
+        {{/if}}
+          <div class="form-group">
+             <div class="text-danger" id="email-error"></div>
+            <input type="email" class="form-control" name="email" required id="typeEmailX" value="a1@gmail.com" placeholder="Enter email" onkeyup="validateEmail()" / >
+          </div>
+          <div class="form-group mb-4">
+            <div class="text-danger" id="passwordError"></div>
+            <input type="password" class="form-control" name="password" required id="typePasswordX" placeholder="Password" value="@123456" onkeyup="validatepassword()" />
+          </div>
+
+           <div class="group mb-4">
+          <div class="item line"></div>
+
+          <div class="item text text-dark font-weight-bold">New to this? &nbsp;<a href="/signup">Signup</a>
+          </div>
+          <div class="item line"></div>
+        </div>
+
+          <div class="justify-content-center d-flex mb-3">
+            <button type="submit" class="btn btn-dark w-100 font-weight-bold ">Submit</button>
+          </div>
+        </form>
+
+       
+
+      </div>
+    </div>
+  </div>
+
+</section>
+<script>
+        var emailerror = document.getElementById('email-error');
+        var passworderror = document.getElementById('passwordError');
+
+        function validateEmail() {
+            var emails = document.getElementById('typeEmailX').value;
+
+            if (emails.length == "") {
+
+                emailerror.innerHTML = " this field is required";
+                return false;
+            }
+            if (!emails.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+                emailerror.innerHTML = "invalid";
+                return false;
+            }
+
+            emailerror.innerHTML = '';
+            return true;
+        }
+
+        function validatepassword() {
+            let password = document.getElementById("typePasswordX").value;
+            if (password.length == 0) {
+                passworderror.innerHTML = " This Field is Required !";
+                return false;
+            }
+            if (password.length < 6) {
+                passworderror.innerHTML = " Minimum 6 characters required  !";
+                return false;
+            }
+            if (!password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)) {
+                passworderror.innerHTML = "password must contain atleast 1 special character and number !";
+                return false;
+            }
+            passworderror.innerHTML = '';
+            return true;
+        }
+
+        function validateForm() {
+            if (!validateEmail() || !validatepassword()) {
+
+                return false;
+            }
+        }
+    </script>

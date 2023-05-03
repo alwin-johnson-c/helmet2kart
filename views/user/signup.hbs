@@ -1,0 +1,182 @@
+
+    <style>
+        .group {
+            display: table;
+            width: 100%;
+        }
+
+        .item {
+            display: table-cell;
+        }
+
+        .text {
+            white-space: nowrap;
+            width: 1%;
+            padding: 0 10px;
+        }
+
+        .line {
+            border-bottom: 1px solid #000;
+            position: relative;
+            top: -.5em;
+        }
+    </style>
+    <section>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-4 border rounded" style="background-color:#fff;">
+                    <div>
+                        <h2 class=" text-center" style="color: black;">Signup</h2>
+                    </div>
+                    {{!-- {{#if signUpErr}}
+                    <p class="error text-danger">{{signUpErr}}</p>
+                    {{/if}}
+                    {{#if referErr}}
+                    <p class="error text-danger">{{referErr}}</p>
+                    {{/if}} --}}
+                    <form action="/signup" id="signup" method="post">
+                        <div class="form-group">
+                             <div class="text-danger" id="nameError"></div>
+                            <input type="text" class="form-control" name="name" id="username" placeholder="Name"  onkeyup="validateName()" required/>
+                        </div>
+                        <div class="form-group">
+                              <div class="text-danger" id="email-error"></div>
+                            <input type="email" class="form-control" name="email" id="typeEmailX" placeholder="Enter email" onkeyup="validateEmail()" required/>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-danger" id="phoneError"></div>
+                            <input type="number" class="form-control" name="phone" id="phone" placeholder="mobile"
+                              onkeyup="validatephone()" >
+                                
+                        </div>
+
+                        <div class="form-group">
+                            <div class="text-danger" id="passwordError"></div>
+                            <input type="password" class="form-control" name="password" id="typePasswordX"
+                                placeholder="Password"  onkeyup="validatePassword()" required/>
+                        </div>
+                        {{!-- <div class="form-group">
+                            <input type="text" class="form-control" name="referalCode" id="referal"
+                                placeholder="Referalcode">
+                        </div> --}}
+                        <div class="group mb-4">
+                            <div class="item line"></div>
+                            <div class="item text text-dark font-weight-bold">Already have an Account? <a
+                                    href="/login">Log In</a>
+                            </div>
+                            <div class="item line"></div>
+                        </div>
+                        <div class=" justify-content-center d-flex mb-4">
+                            <button type="submit" class="btn btn-dark w-100">Signup</button>
+                        </div>
+                        
+                    </form>
+                     <div class="group mb-4">
+          <div class="item line"></div>
+          <div class="item text text-dark font-weight-bold">Login With OTP &nbsp;<a href="/otp-login">Otp Login</a>
+          </div>
+          <div class="item line"></div>
+        </div>
+                </div class="mb-5">
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+    var emailerror=document.getElementById('email-error');
+    var passworderror=document.getElementById('passwordError');
+    var nameerror=document.getElementById('nameError');
+     var phoneerror=document.getElementById('phoneError');
+    function validateName(){
+ let names=document.getElementById("username").value;
+   if(names.length==0){
+     nameerror.innerHTML=" This Field is Required !";
+     return false;
+  }  
+  if(names.length<4){
+     nameerror.innerHTML=" Minimum 4 characters required  !";
+     return false;
+  } 
+ if(!names.match(/^[a-zA-Z]{4,}(?: [a-zA-Z]*){0,2}$/)){
+     nameerror.innerHTML="Username should not contain any special characters and numbers !";
+     return false;
+  }
+  nameerror.innerHTML='';
+  return true;
+ }
+    
+    function validateEmail(){
+        var emails=document.getElementById('typeEmailX').value;
+    
+        if(emails.length==""){
+    
+            emailerror.innerHTML=" This field is required";
+            return false;
+    
+        }
+         if(!emails.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+          emailerror.innerHTML="Invalid";
+          return false;
+        }
+    
+        emailerror.innerHTML='';
+        return true;
+    
+    
+    }
+
+    function validatephone(){
+        let phone= document.getElementById("phone").value;
+        if(phone.length==""){
+            phoneerror.innerHTML="This Field is Required ! "
+            return false
+
+        }
+         if(!phone.match( /^[0-9]*$/)){
+            phoneerror.innerHTML="only number"
+            return false
+        }
+        if(phone.length<10){
+            phoneerror.innerHTML="Minimum 10 number";
+            return false
+        }
+        if( phone.length>=11){
+             phoneerror.innerHTML="Max 10 number";
+            return false
+
+        }
+       
+    }
+    function validatePassword(){
+ let password=document.getElementById("typePasswordX").value;
+  if(password.length==0){
+     passworderror.innerHTML=" This Field is Required !";
+     return false;
+  }
+  if(password.length<6){
+     passworderror.innerHTML=" Minimum 6 characters required  !";
+     return false;
+  }
+ if(!password.match( /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/ )){
+     passworderror.innerHTML="password must contain atleast 1 special character and number !";
+     return false;
+  }
+   
+  
+  passworderror.innerHTML='';
+  return true;
+ }
+  
+ function validateForm(){
+ if(!validateName()|| !validateEmail()||!validatePassword()){
+      
+     return false;
+ }
+  }
+
+
+ 
+
+ </script>
+</body>

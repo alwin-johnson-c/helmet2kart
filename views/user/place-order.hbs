@@ -1,0 +1,412 @@
+{{!-- <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate mb-5 text-center">
+          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>Checkout <i class="fa fa-chevron-right"></i></span></p>
+            <h2 class="mb-0 bread">Checkout</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-xl-10 ftco-animate">
+						<form action="/place-order" id="checkout-form" class="billing-form">
+							<h3 class="mb-4 billing-heading">Billing Details</h3>
+	          	<div class="row align-items-end">
+	          		<div class="col-md-6">
+	                <div class="form-group"> --}}
+	                	{{!-- <label for="firstname">Firt Name</label>
+	                  <input type="text" class="form-control" placeholder="">
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="lastname">Last Name</label>
+	                  <input type="text" class="form-control" placeholder="">
+	                </div>
+                </div>
+                <div class="w-100"></div>
+		            <div class="col-md-12">
+		            	<div class="form-group">
+		            		<label for="country">State / Country</label>
+		            		<div class="select-wrap">
+		                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+		                  <select name="" id="" class="form-control">
+		                  	<option value="">France</option>
+		                    <option value="">Italy</option>
+		                    <option value="">Philippines</option>
+		                    <option value="">South Korea</option>
+		                    <option value="">Hongkong</option>
+		                    <option value="">Japan</option>
+		                  </select>
+		                </div>
+		            	</div>
+		            </div> --}}
+		            {{!-- <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="streetaddress">Address</label>
+	                  <input type="text" class="form-control"  id="address" name="address"  placeholder="House number and street name">
+	                </div>
+		            </div> --}}
+		            {{!-- <div class="col-md-6">
+		            	<div class="form-group">
+	                  <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
+	                </div>
+		            </div> --}}
+		            {{!-- <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="towncity">Town / City</label>
+	                  <input type="text" class="form-control" placeholder="">
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+		            		<label for="postcodezip">Pincode *</label>
+	                  <input type="text" class="form-control"  id="pincode" name="pincode"   placeholder="">
+	                </div>
+		            </div>
+		            <div class="w-100"></div> 
+		             <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="phone">mobile</label>
+	                  <input type="text" class="form-control"   id="mobile" name="mobile"  placeholder="">
+	                </div> 
+	              </div> --}}
+	              {{!-- <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="emailaddress">Email Address</label>
+	                  <input type="text" class="form-control" placeholder="">
+	                </div>
+                </div> --}}
+                {{!-- <div class="w-100"></div> --}}
+                {{!-- <div class="col-md-12">
+                	<div class="form-group mt-4">
+										<div class="radio">
+										  <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
+										  <label><input type="radio" name="optradio"> Ship to different address</label>
+										</div>
+									</div>
+                </div> --}}
+	            {{!-- </div>
+	          </form><!-- END --> --}}
+
+
+
+	          {{!-- <div class="row mt-5 pt-3 d-flex">
+	          	<div class="col-md-6 d-flex">
+	          		<div class="cart-detail cart-total p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Cart Total</h3>
+	          			<p class="d-flex">
+		    						<span>Subtotal</span>
+		    						<span>$20.60</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Delivery</span>
+		    						<span>$0.00</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Discount</span>
+		    						<span>$3.00</span>
+		    					</p>
+		    					<hr>
+		    					<p class="d-flex total-price">
+		    						<span>Total</span>
+		    						<span>{{total}}</span>
+		    					</p>
+								</div>
+	          	</div>
+	          	<div class="col-md-6">
+	          		<div class="cart-detail p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Payment Method</h3>
+									<div class="form-group" >
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="payment-method" value="cod" class="mr-2"> COD</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="payment-method"  value="online" class="mr-2"> online</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="checkbox">
+											   <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+											</div>
+										</div>
+									</div> --}}
+									{{!-- <p><a href="#"class="btn btn-primary py-3 px-4">Check out</a></p> --}}
+									{{!-- <button type="submit" class="btn btn-danger">checkout</button>
+								</div> --}}
+	          	{{!-- </div>
+	          </div>
+          </div> <!-- .col-md-8 --> --}}
+        {{!-- </div>
+    	</div>
+    </section> --}}
+
+
+
+	<section>
+		  <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Checkout</p>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Checkout Start -->
+    <div class="container-fluid pt-5">
+        <form action="" id="checkout-form">
+        <div class="row px-xl-5">
+            <div class="col-lg-8">
+                <div class="mb-4" >
+                    <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>First Name</label>
+                            <input class="form-control" type="text" name="fname" placeholder="NAME" id="fname" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Last Name</label>
+                            <input class="form-control" type="text"  name="lname" placeholder="last name" id="lname" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>E-mail</label>
+                            <input class="form-control" type="email"  name="email" placeholder="example@email.com" id="email" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Mobile No</label>
+                            <input class="form-control" type="number"  name="number"  placeholder="+123 456 789" id="number" required>
+                            <input type="text" name="userId" value="{{user._id}}" hidden>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Address Line 1</label>
+                            <input class="form-control" type="text" name="address"  placeholder="123 Street" id="address" required>
+                        </div>
+                        {{!-- <div class="col-md-6 form-group">
+                            <label>Address Line 2</label>
+                            <input class="form-control" type="text" placeholder="123 Street">
+                        </div> --}}
+                        <div class="col-md-6 form-group">
+                            <label>Country</label>
+                             <input class="form-control" type="text" name="country"  placeholder="country"  id="country " required>
+                            {{!-- <select class="custom-select">
+                                <option selected>Uae</option>
+                                <option>Afghanistan</option>
+                                <option>France</option>
+                                <option>india</option>
+                                <option>usa</option>
+                                <option>uk</option>
+                            </select> --}}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>City</label>
+                            <input class="form-control" type="text" name="city"  placeholder="city" id="city" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>State</label>
+                            <input class="form-control" type="text" name="state"  placeholder="state" id="state" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>ZIP Code</label>
+                            <input class="form-control" type="number" name="pincode"   placeholder="123" id="pincode"  required>
+                        </div>
+                        {{!-- <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="newaccount">
+                                <label class="custom-control-label" for="newaccount">Create an account</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="shipto">
+                                <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-5">
+                    <div class="discount__content"><br><br>
+                    <h6>Discount codes</h6>
+                      <form class="mb-5" action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control p-4"  id="coupon"   name="coupon" placeholder=" Enter Coupon Code">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary"  onclick="couponApply()">Apply Coupon</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="font-weight-medium mb-3">Products</h5>
+                        {{#each products}}
+                        <div class="d-flex justify-content-between">
+                            <p>{{this.product.name}}</p>
+                            <p>₹{{this.product.price}}</p>
+                            <p>{{this.quantity}}</p>
+                        </div>
+                        {{/each}}
+                       
+                        <hr class="mt-0">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium" id="">₹{{total}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">discount</h6>
+                            <h6 class="font-weight-medium"><span id="discount">0.00</span></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 id="total" class="font-weight-bold">₹{{total}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment-method" id="paypal" value="paypal" >
+                                <label class="custom-control-label" for="paypal" >paypal</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment-method" id="cod" value="cod">
+                                <label class="custom-control-label" for="cod" >COD</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment-method" id="wallet" value="wallet">
+                                <label class="custom-control-label" for="wallet" >wallet</label>
+                            </div>
+                        </div>
+                        {{!-- <div class="">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                                <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+                            </div>
+                        </div> --}}
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                    <button  type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    <!-- Checkout End -->
+	</section>
+
+	<script>
+		$("#checkout-form").submit((e)=>{
+			e.preventDefault()
+			$.ajax({
+				url:'/place-order',
+				method:'post',
+				data:$('#checkout-form').serialize(),
+				success:(response)=>{
+                    alert(response)
+                    
+					if(response.codStatus){
+						location.href='/order-success'
+					}else if(response.paypal){
+                        location.href = response.link
+                    }else{
+                        location.href='/order-success'
+                    }
+				}
+			})
+		})
+	</script>
+    <script>
+    function couponApply() {
+        console.log("entered")
+        let couponCode = document.getElementById('coupon').value
+        $.ajax({
+            url: '/coupon-apply',
+            data: {
+                coupon: couponCode,
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.couponSuccess) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Coupon Applied Successfully",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    })
+                    document.getElementById('total').innerHTML = response.total
+                    document.getElementById('discount').innerHTML = response.discountValue
+                    {{!-- document.getElementById('CouponName').value = response.coupon --}}
+                    console.log(response.coupon)
+                } else if (response.couponUsed) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "warning",
+                        title: "You are Already Used This Coupon",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                } else if (response.couponExpired) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "warning",
+                        title: "Entered Coupon Expired",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                } else {
+                    Swal.fire({
+                        position: "center",
+                        icon: "warning",
+                        title: "Invalid Coupon",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+            }
+        })
+    }
+</script>

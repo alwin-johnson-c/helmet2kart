@@ -1,0 +1,22 @@
+
+<div class="container">
+    <div class="row mt-4 ml-2">
+        {{#each product}}
+        <div class="card" style="width: 15rem;  padding-right: 12px;">
+
+            <img class="card-img-top" src="/product-image/{{this.product._id}}1.jpg" width="200px" height="200px"
+                alt="Card image cap">
+            <div class="card-body">
+                <center>
+                    <h4 class="card-title"><b>{{this.product.name}}</b></h4>
+                    <h5 class="card-text">₹ {{this.product.price}}</h5>
+                    <h5 class="card-text">Quantity-{{this.quantity}}</h5>
+                </center>
+
+
+            </div>
+
+        </div>
+        {{/each}}
+    </div>
+</div>

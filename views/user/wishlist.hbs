@@ -1,0 +1,146 @@
+<!--wishlist Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>img</th>
+                            <th>name</th>
+                            <th>Price</th>
+                            {{!-- <th>Quantity</th> --}}
+                            {{!-- <th>Total</th> --}}
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        {{#each products}}
+                        <tr>
+                            <td class="align-middle"><img src="/product-image/{{this.product._id}}1.jpg" alt="" style="width: 50px;"></td>
+                            <td class="align-middle">{{this.product.name}}</td>
+                            <td class="align-middle">{{this.product.price}}</td>
+                             {{!--<td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    
+                                    
+                                     
+                                    {{!-- <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)" >-</button>
+                                        <span id="{{this.product._id}}">{{this.quantity}}</span>
+                                        <button class="btn btn-sm btn-primary" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+                                            
+                                        
+                                    </div>  
+                                </div> 
+                            </td>--}}
+                            {{!-- <td class="align-middle">₹150</td> --}}
+                            <td class="align-middle"><a onclick="deletewishlistItem('{{this.product._id}}','{{this._id}}')" class="btn btn-danger">remove</a></td>
+                            <td><button onclick="addToCart('{{this.product._id}}')" class="btn bg-warning text-dark text-dark p-0 " style="border-radius: 5px; margin-left: -3%;
+    width: 54%;">Add To Cart</button></td>
+                        </tr>
+                        
+                       {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+            {{!-- <div class="col-lg-4">
+                <form class="mb-5" action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control p-4" placeholder="Coupon Code">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">Apply Coupon</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium"><span id="total1">₹{{totalValue}}</span></h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">0</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold"><span id="total">₹{{totalValue}}</span></h5>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div> --}}
+        </div>
+    </div>
+    <!-- Cart End -->
+
+
+
+
+
+{{!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="users/lib/easing/easing.min.js"></script>
+    <script src="users/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="./users/mail/jqBootstrapValidation.min.js"></script>
+    <script src="./users/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script> --}}
+    <script>
+
+function addToCart(proId) {
+    console.log('add to cart function called')
+    $.ajax({
+        url: '/add-to-cart/' + proId,
+        method: 'get',
+        success: (response) => {
+            if (response.status) {
+                let count = $('#cart-count').html()
+                count = parseInt(count) + 1
+                $('#cart-count').html(count)
+                
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Your cart  has been saved',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+          
+            }
+            }
+    })
+}
+
+
+
+
+    function deletewishlistItem(proId,cartId){
+        $.ajax({
+            url:'/delete-wishlist-item/'+proId+'/'+cartId,
+            method:'get',
+            success:(response)=>{
+                if(response.status){
+                    alert("items removed from cart")
+                    location.reload()
+                }
+            }
+        })
+
+
+    }
+
+
+
+    </script>
