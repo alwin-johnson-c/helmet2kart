@@ -41,16 +41,16 @@ router.get('/', function(req, res, next) {
 router.get('/view-product', viewProduct );
 
 
-router.get('/add-product',addProduct )
+router.get('/add-product',verifyAdminLogin,addProduct )
 
-router.post('/add-product',viewAddProduct );
+router.post('/add-product',verifyAdminLogin,viewAddProduct );
 
 
 
 
 router.get('/delete-product/:id',deleteAddProduct  );
 
-router.get('/edit-product/:id',editProduct );
+router.get('/edit-product/:id',verifyAdminLogin,editProduct );
 
 
 
@@ -365,6 +365,7 @@ router.get('/product-offers',verifyAdminLogin, async (req, res) => {
     allProducts,
     prodOffers,
     prodOfferErr: req.session.prodOfferErr,
+    admin:req.session.admin
   });
   req.session.prodOfferErr = false;
 })

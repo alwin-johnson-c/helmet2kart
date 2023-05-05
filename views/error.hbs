@@ -1,3 +1,454 @@
-<h1>{{message}}</h1>
-<h2>{{error.status}}</h2>
-<pre>{{error.stack}}</pre>
+{{!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error 404</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.cielo {
+  width: 100%;
+  height: 70vh;
+  background-color: #ffe15d;
+}
+.mesa {
+  display: flex;
+  justify-content: space-evenly;
+  position: relative;
+  width: 100%;
+  height: 30vh;
+  background-color: #ffb100;
+}
+.clavo {
+  position: absolute;
+  top: 20px;
+  width: 15px;
+  height: 20px;
+  left: 52%;
+  background-color: #86a3b8;
+  border-radius: 50%;
+  border: 2px solid black;
+  transform: translateX(-50px) rotate(-15deg);
+}
+.sombra-clavo {
+  position: absolute;
+  top: 20px;
+  width: 15px;
+  height: 20px;
+  left: 52%;
+  background-color: #86a3b8;
+  border-radius: 50%;
+  transform: translateX(-50px) rotate(-15deg);
+}
+.cuerpo-clavo {
+  position: absolute;
+  top: 30px;
+  width: 10px;
+  height: 20px;
+  left: 52%;
+  background-color: #86a3b8;
+  border-right: 4px solid black;
+  border-bottom-left-radius: 50% 100%;
+  border-bottom-right-radius: 50% 100%;
+  transform: translateX(-60px) rotate(45deg);
+}
+.cuerda-cuadro {
+  position: absolute;
+  top: 38px;
+  left: 52%;
+  width: 0px;
+  height: 0px;
+  border-bottom: 80px solid #665a48;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  transform: translateX(-150px) rotate(-15deg);
+  animation: valanceocuerda 5s infinite;
+}
+@keyframes valanceocuerda{
+  0%{transform: translateX(-150px) rotate(-15deg);}
+  50% { transform: translateX(-170px) rotate(15deg);}
+  100%{transform: translateX(-150px) rotate(-15deg);}
+}
+
+.cuerda-cuadro-interno {
+  position: absolute;
+  top: 42px;
+  left: 52%;
+  width: 0px;
+  height: 0px;
+  border-bottom: 80px solid #ffe15d;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  transform: translateX(-149px) rotate(-15deg);
+  animation: valanceocuerda 5s infinite;
+}
+.cuadro {
+  position: absolute;
+  top: 145px;
+  left: 50%;
+  width: 320px;
+  height: 200px;
+  background-color: #ecf2ff;
+  border: 18px solid #aa8b56;
+  border-radius: 20px;
+  outline: 4px solid #665a48;
+  color: red;
+  vertical-align: middle;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: valanceo 5s infinite ;
+}
+@keyframes valanceo{
+  0%{transform: rotate(-15deg) translateX(calc(50% - 330px)) translateY(-80px)}
+  50%{transform:  rotate(15deg) translateX(calc(50% - 460px)) translateY(35px)}
+  100%{transform: rotate(-15deg) translateX(calc(50% - 330px))translateY(-80px)}
+}
+.maceta-central {
+  position: relative;
+  top: 30px;
+  width: 120px;
+  height: 100px;
+  border: 4px solid #665a48;
+  background-color: #c27664;
+  border-bottom-left-radius: 15% 40%;
+  border-bottom-right-radius: 15% 40%;
+}
+.maceta-central-top {
+  position: relative;
+  top: -4px;
+  width: 140px;
+  height: 30px;
+  right: 15px;
+  border: 4px solid #665a48;
+  background-color: #c27664;
+  border-radius: 10px;
+}
+.maceta-izq{
+  left:90px ;
+}
+.cactus-cero {
+  position: relative;
+  top: -250px;
+  left: -60px;
+  width: 250px;
+  height: 250px;
+  background-color: #9cff2e;
+  border-radius: 50%;
+  border: 4px solid #367e18;
+}
+.interno-cactus {
+  position: absolute;
+  top: -4px;
+  left: 70px;
+  width: 100px;
+  height: 250px;
+  background-color: transparent;
+  border-radius: 50%;
+  border-top-left-radius: ;
+  border: 4px solid #367e18;
+}
+.pinchos-cactus-cero {
+  position: absolute;
+  top: -4px;
+  left: 70px;
+  width: 100px;
+  height: 250px;
+  background-color: transparent;
+  border-radius: 50%;
+  border-top-left-radius: ;
+  border: 4px solid #367e18;
+}
+.cactus-pincho {
+  position: absolute;
+  top: 125px;
+  left: -20px;
+  width: 20px;
+  height: 4px;
+  background-color: #367e18;
+}
+.ext1 {
+  top: 37px;
+  left: 7px;
+  transform: rotate(36deg);
+}
+.ext2 {
+  top: -9px;
+  left: 70px;
+  transform: rotate(72deg);
+}
+.ext3 {
+  top: -10px;
+  left: 155px;
+  transform: rotate(108deg);
+}
+.ext4 {
+  top: 45px;
+  left: 225px;
+  transform: rotate(144deg);
+}
+.ext5 {
+  top: 130px;
+  left: 250px;
+  transform: rotate(180deg);
+}
+.ext6 {
+  top: 220px;
+  left: 210px;
+  transform: rotate(216deg);
+}
+.ext7 {
+  top: 260px;
+  left: 140px;
+  transform: rotate(252deg);
+}
+.ext8 {
+  top: 250px;
+  left: 65px;
+  transform: rotate(288deg);
+}
+.inter9 {
+  top: 200px;
+  left: 0px;
+  transform: rotate(324deg);
+}
+.inter0 {
+  top: 125px;
+  left: -22px;
+  transform: rotate(360deg);
+}
+.inter1 {
+  width: 30px;
+  top: 55px;
+  left: 65px;
+  transform: rotate(3deg);
+}
+.inter2 {
+  width: 30px;
+  top: 30px;
+  left: 145px;
+  transform: rotate(-5deg);
+}
+.inter3 {
+  width: 30px;
+  top: 120px;
+  left: 55px;
+  transform: rotate(0deg);
+}
+.inter4 {
+  width: 30px;
+  top: 170px;
+  left: 60px;
+  transform: rotate(-5deg);
+}
+.inter5 {
+  width: 30px;
+  top: 220px;
+  left: 75px;
+  transform: rotate(-3deg);
+}
+.inter6 {
+  width: 30px;
+  top: 195px;
+  left: 152px;
+  transform: rotate(3deg);
+}
+.inter7 {
+  width: 30px;
+  top: 150px;
+  left: 160px;
+  transform: rotate(5deg);
+}
+.inter8 {
+  width: 30px;
+  top: 80px;
+  left: 160px;
+  transform: rotate(-5deg);
+}
+.cactus-izq {
+  position: relative;
+  top: -280px;
+  left: 15px;
+  width: 80px;
+  height: 235px;
+  background: #9cff2e;
+  border: 4px solid #367e18;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+
+}
+.cactus-part1 {
+  position: relative;
+  top: 90px;
+  left: -108px;
+  width: 100px;
+  height: 50px;
+  background-color: #9cff2e;
+  border: 4px solid #367e18;
+  border-bottom-left-radius: 30px;
+}
+.cactus-part2 {
+  position: relative;
+  top: -58px;
+  left: -108px;
+  width: 50px;
+  height: 90px;
+  background-color: #9cff2e;
+  border: 4px solid #367e18;
+  border-bottom: #9cff2e;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+.pincho-base {
+  position: relative;
+  top: -90px;
+  left: -22px;
+  width: 20px;
+  height: 4px;
+  background-color: #367e18;
+}
+.base1 {
+  top: -162px;
+  left: 0px;
+  transform: rotate(45deg);
+}
+.base2 {
+  top: -160px;
+  left: 65px;
+  transform: rotate(130deg);
+}
+.base3 {
+  top: -85px;
+  left: 83px;
+}
+.base4 {
+  top: -20px;
+  left: 83px;
+}
+.base5 {
+  left: 83px;
+  top: 45px;
+}
+.base6 {
+  top: 15px;
+}
+.base7 {
+  top: 60px;
+  left: 40px;
+  transform: rotate(90deg);
+}
+.base8 {
+  top: 35px;
+  left: -20px;
+  transform: rotate(-25deg);
+}
+.base9 {
+  top: 70px;
+}
+.base10 {
+  top: -4px;
+  left: -14px;
+  transform: rotate(35deg);
+}
+.base11 {
+  top: 15px;
+  left: 54px;
+}
+  </style>
+</head>
+
+<body>
+  <div class="cielo"></div>
+  <div class="mesa">
+
+    <div class="maceta-central maceta-izq">
+      <div class="maceta-central-top"></div>
+      <div class="cactus-izq">
+        <div class="cactus-part1">
+          <div class="pincho-base base7"></div>
+          <div class="pincho-base base8"></div>
+
+        </div>
+        <div class="cactus-part2">
+          <div class="pincho-base base9"></div>
+          <div class="pincho-base base10"></div>
+          <div class="pincho-base base11"></div>
+        </div>
+        <div class="pincho-base"></div>
+        <div class="pincho-base base1"></div>
+        <div class="pincho-base base2"></div>
+        <div class="pincho-base base3"></div>
+        <div class="pincho-base base4"></div>
+        <div class="pincho-base base5"></div>
+        <div class="pincho-base base6"></div>
+      </div>
+    </div>
+    <div class="maceta-central">
+      <div class="maceta-central-top">
+        <div class="cactus-cero">
+          <div class="interno-cactus"></div>
+          <div class="cactus-pincho inter1"></div>
+          <div class="cactus-pincho inter2"></div>
+          <div class="cactus-pincho inter3"></div>
+          <div class="cactus-pincho inter4"></div>
+          <div class="cactus-pincho inter5"></div>
+          <div class="cactus-pincho inter6"></div>
+          <div class="cactus-pincho inter7"></div>
+          <div class="cactus-pincho inter8"></div>
+          <div class="cactus-pincho inter9"></div>
+          <div class="cactus-pincho inter0"></div>
+          <div class="cactus-pincho ext1"></div>
+          <div class="cactus-pincho ext2"></div>
+          <div class="cactus-pincho ext3"></div>
+          <div class="cactus-pincho ext4"></div>
+          <div class="cactus-pincho ext5"></div>
+          <div class="cactus-pincho ext6"></div>
+          <div class="cactus-pincho ext7"></div>
+          <div class="cactus-pincho ext8"></div>
+        </div>
+      </div>
+    </div>
+    <div class="maceta-central maceta-der">
+      <div class="maceta-central-top"></div>
+      <div class="cactus-izq">
+        <div class="cactus-part1">
+          <div class="pincho-base base7"></div>
+          <div class="pincho-base base8"></div>
+
+        </div>
+        <div class="cactus-part2">
+          <div class="pincho-base base9"></div>
+          <div class="pincho-base base10"></div>
+          <div class="pincho-base base11"></div>
+        </div>
+        <div class="pincho-base"></div>
+        <div class="pincho-base base1"></div>
+        <div class="pincho-base base2"></div>
+        <div class="pincho-base base3"></div>
+        <div class="pincho-base base4"></div>
+        <div class="pincho-base base5"></div>
+        <div class="pincho-base base6"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="cuerda-cuadro"></div>
+  <div class="cuerda-cuadro-interno"></div>
+  <div class="cuerpo-clavo"></div>
+  <div class="clavo"></div>
+  <div class="sombra-clavo"></div>
+  <div class="cuadro">ERROR!</div>
+
+</body>
+
+</html> --}}

@@ -3,9 +3,9 @@ var productHelpers =require('../../helpers/product-helpers');
 const userHelpers = require('../../helpers/user-helpers');
 
 
-const servicesID = 'VAa0b05db7999d4b64a4550e17eb786136'
-const accountSid = 'AC5e4748559f154072eecc375d268ace1b'
-const authToken= '5104ee20a2b4a2fb68de5bc698f3c601'
+const servicesID = process.env.SERVICE_ID 
+const accountSid = process.env.ACTSID_ID 
+const authToken= process.env.AUTH_TOKN    
 const client = require('twilio')(accountSid,authToken);
 
 // const viewUserList = async (req, res) =>{

@@ -11,9 +11,9 @@ const moment = require("moment");
 
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'ARtCWcny2DdGLPTy7U5Ypeoux69LQtqCzrmJD63E-rfScNUwukYQHt_lrCYIPlBXsGTDLJS4Vad3xvde',
-  'client_secret': 'EFx-tQPh9PCFTEQez6e2SK9n4_w1xi8qAhJbXQVf5fiICmJJTsZ5b3VB6MIzGaJ7-tIUVzmOhmAx1-hr'
+  mode: 'sandbox', //sandbox or live
+  client_id: process.env.CLIENT_ID ,
+  client_secret: process.env. CLIENT_SECRET,
 });
 
 

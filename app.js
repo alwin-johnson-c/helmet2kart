@@ -9,6 +9,9 @@ var  db =require('./config/connection')
 var session = require('express-session')
 let Handlebars=require('handlebars')
 // const multer = require('multer');
+const dotenv= require('dotenv')
+dotenv.config()
+
 
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');

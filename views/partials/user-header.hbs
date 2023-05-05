@@ -1,8 +1,8 @@
 <script src="https://kit.fontawesome.com/d674ecef29.js" crossorigin="anonymous"></script>
 
     <!-- Navbar Start -->
-    <div class="container-fluid mb-5 mt-5">
-        <div class="row border-top px-xl-5">
+    <div class="container-fluid mb-5 mt-3" >
+        <div class="row border-top px-xl-5" >
             <div class="col-lg-3 d-none d-lg-block">
                 <a class="btn btn-dark shadow-none d-flex align-items-center justify-content-between  text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;background-color:rgb(12, 12, 12)">
                     <h6 class="m-0" style="font-size:x-large;color:aliceblue">HELMET2KART</h6>
@@ -22,11 +22,11 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/" class="nav-item nav-link active">home</a>
-                            <a href="/profile" class="nav-item nav-link">profile</a>
+                            {{!-- <a href="/profile" class="nav-item nav-link">profile</a> --}}
+                            <a href="/view-order" class="nav-item nav-link">orders</a>
                             
                            <a href="/cart" class="nav-item nav-link"><i class="bi bi-cart-check-fill fa-solid fa-cart-shopping fa-beat">Cart <span class="badge badge-success" id="cart-count">{{cartCount}}</span></i></a>
                             <a href="/wishlist" class="nav-item nav-link"><i class="fa-sharp fa-regular fa-heart"></i><span class="badge badge-success" id="wishList-count">{{wishListCount}}</span></i></a>
-                            <a href="/view-order" class="nav-item nav-link">orders</a>
                             <a href="/search" class="nav-item nav-link"><i class="fa-solid fa-magnifying-glass fa-spin" style="color: #1c3a6d;"></i></a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">

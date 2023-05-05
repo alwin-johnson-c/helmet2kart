@@ -1,5 +1,21 @@
+<script src="https://kit.fontawesome.com/d674ecef29.js" crossorigin="anonymous"></script>
+
 <style>
+  .btn-dark {
+    color: #fff;
+    background-color: #0f6362;
+    border-color: #1b8163;
+}
   .error { color: red; }
+
+
+  .w-75 {
+    width: 53% !important;
+   
+    margin-left: 99px;
+    margin-top: 15px;
+    padding-top: -22px;
+  }
 </style>
 
 <link
@@ -12,84 +28,10 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-6 col-lg-6 text-center">
-        <div
-          class="rounded mt-5"
-          style="width: 85%; -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 10px 0px rgba(239, 239, 239, 0.75);
-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
-        >
-          <div class="d-flex">
-
-            <div class="">
-
-              <img
-                src="https://thumbs.dreamstime.com/b/user-avatar-icon-button-profile-symbol-flat-person-icon-vector-user-avatar-icon-button-profile-symbol-flat-person-icon-%C3%A2%E2%82%AC-stock-131363829.jpg"
-                {{!--
-                                {{!-- /assets/product-images/{{this._id}}.jpg --}}
-                style="    height: 200px;
-    width: 200px;
-    border-radius: 15px;
-    margin-left: 29px;
-    margin-top: 16px;
-};"
-                alt="pic"
-              />
-            </div>
-            <div class="mx-5 mt-5">
-              <h2><b><br />
-                  {{oneUser.name}}</b></h2>
-            </div>
-
-          </div>
-          <div style="margin-top: 33px;">
-            <div>
-              <a href="#">
-                <p class="btn btn-dark w-75"><b>Wallet :{{#if walletHistory}}
-                      ₹
-                      {{walletHistory}}
-                    {{else}} 0.0{{/if}}</b></p></a>
-              <div
-                class="changeProfile text-center border border-3 rounded w-75 ms-5"
-                style="display: none; margin: 58px;    width: 77%!important;"
-              >
-                <form
-                  action="/edit-profile/{{users._id}}"
-                  method="post"
-                  enctype="multipart/form-data"
-                >
-                  <input
-                    type="file"
-                    class="text-center border"
-                    name="profileImg"
-                    placeholder="imgae"
-                    required
-                  />
-                  <input
-                    type="text"
-                    class="mt-3 text-center border"
-                    name="Name"
-                    value="{{users.Name}}"
-                    style="height: 40px;border-radius: 20px;"
-                    required
-                  /><br /><br />
-                  <input
-                    type="submit"
-                    value="UPDATE"
-                    class="btn btn-dark text-bold"
-                  />
-                </form><br />
-              </div><br />
-            </div>
-           
-            <a class="btn btn-dark w-75 mb-3" href="/view-order"><b>MY ORDERS</b></a>
-
-          </div>
-        </div><br /><br />
-      </div>
+     
       <div class="col-12 col-md-6 col-lg-6">
         <div
-          class="rounded mt-5"
+          class="rounded "
           style="width: 80%; -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
@@ -98,25 +40,54 @@ box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);"
             <h5 class="ms-3" style="padding-left: 50px;"><B>PERSONAL
                 INFORMATIONS</B></h5>
             <hr />
-            <p class="ms-4" style="padding-left: 50px;">Name:
+             <div class="">
+
+              <img
+                src="https://thumbs.dreamstime.com/b/user-avatar-icon-button-profile-symbol-flat-person-icon-vector-user-avatar-icon-button-profile-symbol-flat-person-icon-%C3%A2%E2%82%AC-stock-131363829.jpg"
+              
+                style="    height: 100px;
+    width: 150px;
+    border-radius: 15px;
+    margin-left: 29px;
+    margin-top: 16px;
+};"
+                alt="pic"
+              />
+            
+            <p class="ms-4" style="padding-left: 201px;
+    
+    margin-top: -93px;">Name:
               <b> {{oneUser.name}}</b>
             </p>
-            <p class="ms-4" style="padding-left: 50px;">Email:
+            <p class="ms-4" style="padding-left: 201px;
+    padding-top: -28px;
+    margin-top: 4px;">Email:
               <b> {{oneUser.email}}</b>
             </p>
-            <p class="ms-4" style="padding-left: 50px;">Phone:
+            <p class="ms-4" style="padding-left: 201px;
+    padding-top: -28px;
+    margin-top: 8px; margin-bottom: 52px;">Phone:
               <b> {{oneUser.phone}}</b>
             </p>
-
+            </div>
             {{! Wallet ComeHere  }}
           </div>
+          <div>
+             <a href="#">
+                <p class="btn btn-dark w-75"><b style="font-size: 25px;"><i class="fa-solid fa-sack-dollar fa-shake fa-lg" style="color: #a7acb4;"></i>:{{#if walletHistory}}
+                     ₹
+                      {{walletHistory}}
+                    {{else}} 0.0{{/if}}</b></p></a>
+            <a class="btn btn-dark w-75 mb-3" href="/view-order"><b style="font-size: 25px;">MY ORDERS</b></a></div>
 
           <div>
             <a href="/edit-profile">
               <p
                 class="btn btn-dark w-75"
-                style="margin: 58px;    width: 77%!important;"
-              ><b>EDIT PROFILE</b></p></a>
+                style="margin-top: 1px;
+    width: 71%;
+    margin-left: 98px;"
+              ><b style="font-size: 20px;"><i class="fa-solid fa-pen-to-square">  EDIT </i></b></p></a>
 
             <div
               class="address text-center border border-3"

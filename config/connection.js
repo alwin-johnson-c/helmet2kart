@@ -5,8 +5,10 @@ const state = {
     db: null
 }
 module.exports.connect = function (done) {
-    const url = 'mongodb://0.0.0.0:27017'
+    const url = process.env.URL
+    console.log(url)
     const dbname = 'helmet'
+   
 
     MongoClient.connect(url, (err, data) => {
         if (err) return done(err)

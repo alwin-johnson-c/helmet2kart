@@ -17,7 +17,7 @@ const viewProduct=(req,res)=>{
 
 const addProduct=(req,res)=>{
     productHelpers.viewCategory().then((catgy)=>{
-     res.render('admin/add-product',{catgy})
+     res.render('admin/add-product',{catgy,admin:req.session.admin})
     })
      
    };
@@ -44,6 +44,7 @@ const  viewAddProduct=(req,res)=>{
            
       }
      })
+     
    }
 
  const deleteAddProduct=  (req,res)=>{
@@ -62,7 +63,7 @@ const  viewAddProduct=(req,res)=>{
        
         let product = await  productHelpers.getProductDetails(req.params.id,req.body)
         console.log(product)
-        res.render('admin/edit-product',{product})
+        res.render('admin/edit-product',{product,admin:req.session.admin})
       }
 
 
