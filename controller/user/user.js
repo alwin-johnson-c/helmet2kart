@@ -41,7 +41,7 @@ const client = require('twilio')(accountSid,authToken);
 var homePage = async (req, res) => {
   let todayDate = new Date().toISOString().slice(0, 10);
   var startCouponOffer = await userHelpers.startCouponOffer(todayDate);
-  let startProductOffer=await  productHelpers.startProductOffer(todayDate);
+  // let startProductOffer=await  productHelpers.startProductOffer(todayDate);
   let banner= await adminHelpers.getAllBanners()
   let user = req.session.user;
   console.log(user);
@@ -49,10 +49,10 @@ var homePage = async (req, res) => {
   if (req.session.user) {
     todayDate = new Date().toISOString().slice(0, 10);
     startCouponOffer = await userHelpers.startCouponOffer(todayDate);
-    startProductOffer=await  productHelpers.startProductOffer(todayDate);
+    // startProductOffer=await  productHelpers.startProductOffer(todayDate);
     cartCount = await userHelpers.getCartCount(req.session.user._id);
   }
-  productHelpers.getAllProducts().then((products) => {
+   productHelpers.getAllProducts().then((products) => {
     res.render('user/user-homePage', { products, user, cartCount,banner });
   });
 };

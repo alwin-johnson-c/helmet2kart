@@ -10,8 +10,8 @@ module.exports={
     CATEGORY_COLLECTION:'category',
     WISHLIST_COLLECTION:'wishlist',
     COUPON_COLLECTION:'coupon',
-    BANNER_COLLECTION:"banner",
-    PRODUCT_OFFERS: "product-offer",
+    BANNER_COLLECTION:'banner',
+    PRODUCT_OFFERS: 'product-offer'
 
 
 }

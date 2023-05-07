@@ -7,7 +7,7 @@ const state = {
 module.exports.connect = function (done) {
     const url = process.env.URL
     console.log(url)
-    const dbname = 'helmet'
+    const dbname = 'HELMET'
    
 
     MongoClient.connect(url, (err, data) => {

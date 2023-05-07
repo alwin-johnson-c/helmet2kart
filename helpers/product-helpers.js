@@ -158,50 +158,92 @@ searchProduct: (pname) => {
       resolve(product)
     })
   },
-  
 
-  startProductOffer: (date) => {
-    let proStartDateIso = new Date(date);
-    return new Promise(async (resolve, reject) => {
-      let data = await db
-        .get()
-        .collection(collection.PRODUCT_OFFERS)
-        .find({ startDateIso: { $lte: proStartDateIso } })
-        .toArray();
-      if (data) {
-        await data.map(async (onedata) => {
-          let product = await db
-            .get()
-            .collection(collection.PRODUCT_COLLECTIONS)
-            .findOne({ offer: { $exists: false }, name: onedata.product });
-          if (product) {
-            let actualPrice = parseInt(product.price);
-            let newPrice = (((actualPrice )* (onedata.proOfferPercentage)) / 100);
-            newPrice = newPrice.toFixed();
-            db.get()
-              .collection(collection.PRODUCT_COLLECTIONS)
-              .updateOne(
-                { _id: objectId(product._id) },
-                {
-                  $set: {
-                    actualPrice: actualPrice,
-                    price: actualPrice - newPrice,
-                    offer: true,
-                    proOfferPercentage: onedata.proOfferPercentage,
-                  },
-                }
-              );
-            resolve();
-            console.log("get");
-          } else {
-            resolve();
-            console.log("rejected");
-          }
-        });
-      }
-      resolve();
-});
-  },
+//   startProductOffer: (date) => {
+//     let proStartDateIso = new Date(date);
+//     return new Promise(async (resolve, reject) => {
+//       let data = await db
+//         .get()
+//         .collection(collection.PRODUCT_OFFERS)
+//         .find({ startDateIso: { $lte: proStartDateIso } })
+//         .toArray();
+//       if (data.length > 0) {
+//         await data.map(async (onedata) => {
+//           let product = await db
+//             .get()
+//             .collection(collection.PRODUCT_COLLECTIONS)
+//             .findOne({ offer: { $exists: false }, name: onedata.product });
+//           if (product) {
+//             let actualPrice = parseInt(product.Amount);
+//             let newPrice = (actualPrice * onedata.proOfferPercentage) / 100;
+//             newPrice = newPrice.toFixed();
+//             db.get()
+//               .collection(collection.PRODUCT_COLLECTION)
+//               .updateOne(
+//                 { _id: objectId(product._id) },
+//                 {
+//                   $set: {
+//                     actualPrice: actualPrice,
+//                     Amount: actualPrice - newPrice,
+//                     offer: true,
+//                     proOfferPercentage: onedata.proOfferPercentage,
+//                   },
+//                 }
+//               );
+//             resolve();
+//             console.log("get");
+//           } else {
+//             resolve();
+//             console.log("rejected");
+//           }
+//         });
+//       }
+//       resolve();
+//     });
+//   },
+
+
+
+//   startProductOffer: (date) => {
+//     let proStartDateIso = new Date(date);
+//     return new Promise(async (resolve, reject) => {
+//       let data = await db.get().collection(collection.PRODUCT_OFFERS)
+//         .find({ startDateIso: { $lte: proStartDateIso } })
+//         .toArray();
+//       if (data) {
+//         await data.map(async (onedata) => {
+//           let product = await db
+//             .get()
+//             .collection(collection.PRODUCT_COLLECTIONS)
+//             .findOne({ offer: { $exists: false }, name: onedata.product });
+//           if (product) {
+//             let actualPrice = parseInt(product.price);
+//             let newPrice = (((actualPrice )* (onedata.proOfferPercentage)) / 100);
+//             newPrice = Math.floor(newPrice)
+//             db.get()
+//               .collection(collection.PRODUCT_COLLECTIONS)
+//               .updateOne(
+//                 { _id: objectId(product._id) },
+//                 {
+//                   $set: {
+//                     actualPrice: actualPrice,
+//                     price: actualPrice - newPrice,
+//                     offer: true,
+//                     proOfferPercentage: onedata.proOfferPercentage,
+//                   },
+//                 }
+//               );
+//             resolve();
+//             console.log("get");
+//           } else {
+//             resolve();
+//             console.log("rejected");
+//           }
+//         });
+//       }
+//       resolve();
+// });
+//   },
 
 
 }

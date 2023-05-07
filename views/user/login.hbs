@@ -44,11 +44,13 @@
         {{/if}}
           <div class="form-group">
              <div class="text-danger" id="email-error"></div>
-            <input type="email" class="form-control" name="email" required id="typeEmailX" value="a1@gmail.com" placeholder="Enter email" onkeyup="validateEmail()" / >
+            <input type="email" class="form-control" name="email" required id="typeEmailX" placeholder="Enter email" onkeyup="validateEmail()" / >
+            {{!-- //value="a1@gmail.com" --}}
           </div>
           <div class="form-group mb-4">
             <div class="text-danger" id="passwordError"></div>
-            <input type="password" class="form-control" name="password" required id="typePasswordX" placeholder="Password" value="@123456" onkeyup="validatepassword()" />
+            <input type="password" class="form-control" name="password" required id="typePasswordX" placeholder="Password"  onkeyup="validatepassword()" />
+            {{!-- //value="@123456" --}}
           </div>
 
            <div class="group mb-4">

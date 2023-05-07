@@ -26,5 +26,18 @@
     "paypal-rest-sdk": "^1.8.1",
     "sweetalert2": "^11.4.8",
     "twilio": "^4.10.0"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alwin-johnson-c/helmet2kart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alwin-johnson-c/helmet2kart/issues"
+  },
+  "homepage": "https://github.com/alwin-johnson-c/helmet2kart#readme",
+  "description": ""
 }
