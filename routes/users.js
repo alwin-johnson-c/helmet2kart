@@ -116,7 +116,7 @@ router.post('/search',verifyLogin, async (req, res) => {
   }
 
   productHelpers.searchProduct(req.body.search).then((products) => {
-    res.render('user/SearchedProduct', {
+    res.render('user/searchedProduct', {
       products,
       // wishCount,
       cartCount,

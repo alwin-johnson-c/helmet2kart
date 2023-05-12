@@ -164,6 +164,7 @@ searchProduct: (pname) => {
         .collection(collection.PRODUCT_COLLECTIONS)
         .find({ name: { $regex: regex } })
         .toArray();
+        console.log(product)
       resolve(product);
     });
   },
