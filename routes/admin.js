@@ -11,6 +11,7 @@ const { deleteProduct, addCategory, viewCategory } = require('../helpers/product
 
 const{viewProduct,addProduct,viewAddProduct,deleteAddProduct,editProduct, editProductPost,editProductGet, userGet,loginGet,signUpGet,signUpPost,loginPost,logOut,deleteUserGet,addCategoryGet ,addCategoryPost,editCategory,blockUser,unBlockUser,viewCategoryGet }= require('../controller/admin/admin');
 const { VerificationAttemptContext } = require('twilio/lib/rest/verify/v2/verificationAttempt');
+const { log } = require('handlebars');
 
 
 
@@ -180,9 +181,12 @@ router.get('/view-ordered-product/:id',verifyAdminLogin, async(req,res)=>{
 console.log(req.params.id);
 let orderId=req.params.id
 let product=await adminHelpers.getOrderProducts(orderId)
+// let allOrders = await adminHelpers.getAll()
+ let oneOrder = await adminHelpers.getOneOrder(orderId)
+//  console.log(oneOrder.deliveryDetails+"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
 
-  res.render('admin/view-ordered-product',{product})
+  res.render('admin/view-ordered-product',{product,admin:true,admin:req.session.admin,oneOrder})
 })
 
 router.post('/changeOrderStatus',async(req,res)=>{
@@ -193,7 +197,7 @@ res.redirect("/admin/order-list");
  
 //dashboard
 router.get('/dashboard',verifyAdminLogin,async(req,res)=>{
-  let admin  =req.session.admin
+  let admin =req.session.admin
   console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyy");
   if(admin ){
     let allCount = await adminHelpers.getDashBoardCount();
@@ -209,7 +213,6 @@ router.get('/dashboard',verifyAdminLogin,async(req,res)=>{
       
     res.render('admin/dashboard',{
       admin:true,
-      admin ,
       allCount,
       totalRevenue,
       dailyRevenue,
@@ -217,7 +220,8 @@ router.get('/dashboard',verifyAdminLogin,async(req,res)=>{
       monthlyRevenue,
       yearlyRevenue,
       data,
-    }); 
+      admin,
+    })
   }else{
     res.redirect('/admin/admin-login')
   }
@@ -292,6 +296,7 @@ router.get('/sales-report',verifyAdminLogin,async (req, res) => {
 router.get('/banner-management',verifyAdminLogin,async(req,res,next)=>{
   
  let banner=await adminHelpers.getAllBanners()
+
  res.render('admin/banner-management',{admin:true,banner,admin: req.session.admin})
 })
 
@@ -393,6 +398,12 @@ router.post('/edit-prodOffer/:_id',verifyAdminLogin,(req, res) => {
   })
 });
 
+router.get('/delete-prodOffer/:id',verifyAdminLogin,(req,res)=>{
+  let id=req.params.id
+  adminHelpers.deleteOffer(id).then(()=>{
+    res.redirect('/admin/product-offers')
+  })
+})
 
 editProductOfferGet: 
 

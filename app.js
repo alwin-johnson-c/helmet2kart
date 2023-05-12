@@ -44,7 +44,10 @@ app.use(fileUpload());
 
 
 // session  use
-app.use(session({secret:"key",cookie:{maxAge:800000}}))
+app.use(session({secret:"key",
+resave:false,
+saveUninitialized:false,
+cookie:{maxAge:800000}}))
 
 //db connection
 db.connect((err)=>{

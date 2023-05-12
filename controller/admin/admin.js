@@ -63,7 +63,11 @@ const  viewAddProduct=(req,res)=>{
        
         let product = await  productHelpers.getProductDetails(req.params.id,req.body)
         console.log(product)
-        res.render('admin/edit-product',{product,admin:req.session.admin})
+        let catResponce =await productHelpers. viewCategory()
+       console.log(catResponce);
+       console.log("llllpygvtfdrdred");
+
+        res.render('admin/edit-product',{product,admin:req.session.admin,catResponce})
       }
 
 

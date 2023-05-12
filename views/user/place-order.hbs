@@ -345,7 +345,7 @@
 				method:'post',
 				data:$('#checkout-form').serialize(),
 				success:(response)=>{
-                    alert(response)
+                    alert("place-order")
                     
 					if(response.codStatus){
 						location.href='/order-success'

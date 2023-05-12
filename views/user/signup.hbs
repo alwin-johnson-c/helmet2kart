@@ -28,12 +28,13 @@
                     <div>
                         <h2 class=" text-center" style="color: black;">Signup</h2>
                     </div>
-                    {{!-- {{#if signUpErr}}
-                    <p class="error text-danger">{{signUpErr}}</p>
+                    {{#if error}}
+                    <p class="error text-danger">{{error}}</p>
                     {{/if}}
-                    {{#if referErr}}
-                    <p class="error text-danger">{{referErr}}</p>
-                    {{/if}} --}}
+                    {{#if passEr}}
+                    <p class="error text-danger">{{passEr}}</p>
+                    {{/if}}
+                    
                     <form action="/signup" id="signup" method="post">
                         <div class="form-group">
                              <div class="text-danger" id="nameError"></div>
@@ -142,6 +143,10 @@
              phoneerror.innerHTML="Max 10 number";
             return false
 
+        }
+        if(phone.length=10){
+             phoneerror.innerHTML=" ";
+            return false
         }
        
     }

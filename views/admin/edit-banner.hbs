@@ -64,6 +64,17 @@
                                         <div id="percentageError"></div>
                                     </div>
 
+                                    <label class="form-label" for="form3Example4c">url</label>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        {{!-- <i class="fas fa-lock fa-lg me-3 fa-fw"></i> --}}
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" onkeyup="validateUrl()" name="offer" id="url" class="form-control form-control-lg"
+                                                placeholder="url" value="{{banner.url}}" />
+
+                                        </div>
+                                        <div id="urlError"></div>
+                                    </div>
+
                                     <label class="form-label" for="image1">Image</label>
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         {{!-- <i class="fas fa-lock fa-lg me-3 fa-fw"></i> --}}
@@ -113,6 +124,7 @@
       var percentageError = document.getElementById('percentageError')
       var subNameError = document.getElementById('subNameError')
       var imageError = document.getElementById('imageError')
+       var imageError = document.getElementById('urlError')
 
       function validateBanner() {
             var banner = document.getElementById('banner').value.trim()
@@ -150,6 +162,17 @@
             percentageError.style.color = 'green'
             return true;
       }
+       function validateUrl() {
+            var subName = document.getElementById('subName').value.trim()
+            if (subName.length < 4) {
+                  subNameError.innerHTML = "need minimum 4 characters"
+                  subNameError.style.color = "red"
+                  return false;
+            }
+            subNameError.innerHTML = 'valid';
+            subNameError.style.color = 'green'
+            return true;
+      }
 
       function validateImage() {
             var image = document.getElementById('image').value.trim();
@@ -172,8 +195,9 @@
             validatePercentage()
             validateSubName()
             validateImage()
+              validateUrl()
 
-            if (validatePercentage() && validateBanner() && validateSubName() && validateImage()) {
+            if (validatePercentage() && validateBanner() && validateSubName() && validateImage() && validateUrl()) {
                   alert('banner added')
             } else {
                   e.preventDefault();

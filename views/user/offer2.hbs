@@ -1,0 +1,47 @@
+    <!-- Products Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2"> OFFER </span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            {{#each offer}}
+        
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" style="border-radius: 5px;">
+                        <img class=" "   src="/product-image/{{this._id}}1.jpg" alt="" style="width: 14rem; height:12rem">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        
+                    <h6><a  style="color:#3c0c08;;" href="/view-product/{{this._id}}">{{this.name}}   </a></h6>
+                        <div class="d-flex justify-content-center" style="color: #085849;">
+                            {{!-- <h6>₹{{this.price}}</h6><h6 class="text-muted ml-2"><del>₹{{this.actualPrice}}</del></h6> --}}
+                            {{#if actualPrice}}₹ {{this.price}}<span> <del style="padding-left:6px; color:black"> ₹{{this.actualPrice}}</del ></span>{{else}}₹ {{this.price}}{{/if}}
+                             {{#if proOfferPercentage}}
+                        <p class="text-secondary"  style="color: #7c7209 !important;
+    padding-left: 10px;
+}">{{proOfferPercentage}}<small  style="font-size: 99%;
+    font-weight: 600;
+    color: rebeccapurple;
+}">%off</small></p>
+ {{/if}}
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        {{!-- <a href="/view-product/{{this._id}}" class="btn  bg-secondary text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a> --}}
+                        {{!-- <a href="/add-to-cart/{{this._id}}" class="btn bg-warning text-dark text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a> --}}
+                        <button onclick="addToCart('{{this._id}}')" class="btn  text-dark text-dark p-0 " style="border-radius: 5px; margin-left: -3%;
+    width: 54%;"><i class="fa-solid fa-cart-shopping fa-beat"></i></button>
+    <button onclick="addtowishlist('{{this._id}}')" class="btn  text-dark text-dark p-0 " style="border-radius: 5px; margin-left: 6%;
+    width: 59%;"><i class="fa-sharp fa-regular fa-heart"></i></button>
+    {{!-- <a href="/add-to-wishlist/{{this._id}}" class="btn bg-warning text-dark text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To wish</a>  --}}
+  
+                            
+                    </div>
+                </div>
+            </div>
+                {{/each}}
+            
+            
+        </div>
+    </div>

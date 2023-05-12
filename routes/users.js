@@ -12,16 +12,35 @@ const {homePage, userSingup, userLogin ,signupPost, otpGet,otpLogin , enterOtp, 
   getPlaceOrder,postPlaceOrder, postChangeProductQty, getOrderSucess,getViewOrder,getOrderProducts,
 editProfilePost,editProfileGet,getInvoice,returnOrderGet } = require('../controller/user/user');
 const { cancelOrder } = require('../helpers/user-helpers');
+const adminHelpers = require('../helpers/admin-helpers');
 
 
-const verifyLogin=(req,res,next)=>{
-  if(req.session.loggedIn){
-    next()
-  }else{
+// const verifyLogin=(req,res,next)=>{
+//   if(req.session.loggedIn){
+//     next()
+//   }else{
+//     res.redirect('/login')
+//   }
+// }
+const verifyLogin = (req, res, next) => {
+  try {
+    if (req.session.loggedIn) {
+      userHelpers.isblocked(req.session.user._id).then((response) => {
+        if (response.isblocked) {
+          req.session.loggedIn = null
+          req.session.blockErr = 'You Are Blocked'
+          res.redirect('/login')
+        } else {
+          next()
+        }
+      })
+    } else {
+      res.redirect('/login')
+    }
+  } catch (err) {
     res.redirect('/login')
   }
 }
-
 
 /* GET users listing. */
 router.get('/',homePage);
@@ -61,7 +80,7 @@ router.get('/about',function(req,res){
 // cart
 router.get('/cart',verifyLogin,cartGet)
 
- router.get('/add-to-cart/:id',addCart);
+ router.get('/add-to-cart/:id',verifyLogin,addCart);
 
 
  router.get('/delete-cart-item/:proId/:cartId',cartDelete);
@@ -71,58 +90,40 @@ router.get('/cart',verifyLogin,cartGet)
 
 //search category error '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-// router.get('/search',verifyLogin,async(req,res)=>{
-//   let user =req.session.user
-//   if(req.session.user){
-//     let product=await productHelpers.getSearchProduct().
 
-//     const catId = req.params.catId;
-//   const searchWord = req.query.search;
-
-//   try {
-//     const category = await db.get().collection(collection.CART_COLLECTION ).findOne({ _id: ObjectId(catId), name: { $regex: searchWord, $options: 'i' } });
-//     res.render('category', { category });
-//   } catch (err) {
-//     console.log(err);
-//     res.render('error', { message: 'Error fetching category' });
-//   }
-
-//   }
-//   res.render('user/search',{user})
-// })
 router.get('/search',verifyLogin,async (req, res) => {
   let cartCount = 0;
   // let wishCount = 0;
   let user = req.session.user;
-  // if (req.session.user) {
-  //   cartCount = await userHelpers.getCartCount(req.session.user._id);
-  //   // wishCount = await userHelpers.getWishlistCount(req.session.user._id);
+  if (req.session.user) {
+    cartCount = await userHelpers.getCartCount(req.session.user._id);
+    // wishCount = await userHelpers.getWishlistCount(req.session.user._id);
   
-  // }
+  }
   res.render('user/search', { notShowB: true, cartCount, user });
   
-},)
+})
 
 
 router.post('/search',verifyLogin, async (req, res) => {
   let cartCount = 0;
   console.log(req.body.search);
   // let wishCount = 0;
-  let user = req.session.user;
+  
   if (req.session.user) {
     cartCount = await userHelpers.getCartCount(req.session.user._id);
     // wishCount = await userHelpers.getWishlistCount(req.session.user._id);
   }
 
   productHelpers.searchProduct(req.body.search).then((products) => {
-    res.render("user/SearchedProduct", {
+    res.render('user/SearchedProduct', {
       products,
       // wishCount,
       cartCount,
-      user,
+      user:req.session.user
     });
   });
-},)
+})
 
 
 
@@ -273,11 +274,91 @@ router.post('/coupon-apply',verifyLogin,async(req,res)=>{
   })
 })
 
+// router.get('/offerZone',(req,res)=>{
+  
+//   res.render('user/offer1')
+// })
+
+
+router.get('/offer1',verifyLogin,async(req,res)=>{
+  const id=req.params.id
+  console.log(id,'iddddddd');
+  let offer=await adminHelpers.offerUrl()
+  console.log(offer,'offer');
+  res.render('user/offer1',{user:req.session.user,id,offer})
+})
 
 
 
+router.get('/offer2',verifyLogin,async(req,res)=>{
+  const id=req.params.id
+  console.log(id,'iddddddd');
+  let offer=await adminHelpers.offerUrl()
+  res.render('user/offer2',{user:req.session.user,offer})
+})
+
+router.get('/sort',verifyLogin,async(req,res)=>{
+  let catgy=await userHelpers.viewUserCat()
+  let sorting =await productHelpers.SortedProduct(req.query.category)
+  res.render('user/smk',{user:req.session.user,sorting,catgy})
+});
 
 
+router.get('/forgot-password', (req, res) => {
+  let cartCount = 0;
+  // let wishCount = 0;
+  res.render("user/forgot-password", {
+    FPBerr: req.session.FPblockErr,
+    FPUerr: req.session.FPnoUserErr,
+    passErr: req.session.pasErr,
+    cartCount,
+    // wishCount,
+  });
+  req.session.FPblockErr = false;
+  req.session.FPnoUserErr = false;
+  req.session.pasErr = false;
+});
+
+router.post('/forgot-password',async (req, res) => {
+  let cartCount = 0;
+  // let wishCount = 0;
+  await userHelpers.forgotPassword(req.body).then((response) => {
+    let email = response.email;
+    if (response.blocked) {
+      req.session.FPblockErr = "You Are Blocked";
+      res.redirect("/forgot-password");
+    } else if (response.noUser) {
+      req.session.FPnoUserErr = "Email Is Not Exist ";
+      res.redirect("/forgot-password");
+    } else {
+      res.render("user/repassword", { email, cartCount, });
+    }
+  });
+},)
+router.get('/enter-password', (req, res) => {
+  res.render("user/repassword");
+});
+
+
+router.post('/enter-password', (req, res) => {
+  console.log(req.body);
+
+  userHelpers.changePassword(req.body).then((response) => {
+    if (response.status) {
+      res.redirect("/login");
+    } else {
+      req.session.pasErr = "Password Not Matched";
+      res.redirect("/forgot-password");
+    }
+  });
+},)
+
+
+forgottPasswordPost: 
+
+newPasswordGet:
+
+newPasswordPost:
 
 
 module.exports = router;

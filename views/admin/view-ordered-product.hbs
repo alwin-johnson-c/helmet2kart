@@ -1,4 +1,4 @@
-
+{{!-- 
 <div class="container">
     <div class="row mt-4 ml-2">
         {{#each product}}
@@ -19,4 +19,39 @@
         </div>
         {{/each}}
     </div>
+</div> --}}
+
+<div class="container">
+  <div class="row mt-4 ml-2">
+    {{#each product}}
+    <div class="card" style="width: 15rem; padding-right: 12px;">
+      <img class="card-img-top" src="/product-image/{{this.product._id}}1.jpg" width="200px" height="200px" alt="Card image cap">
+      <div class="card-body">
+        <center>
+          <h4 class="card-title"><b>{{this.product.name}}</b></h4>
+          <h5 class="card-text">₹ {{this.product.price}}</h5>
+          <h5 class="card-text">Quantity-{{this.quantity}}</h5>
+        </center>
+      </div>
+    </div>
+    {{/each}}
+
+    <!-- Additional Card for User Data -->
+    <div class="card" style="width: 15rem; padding-right: 12px;">
+      {{!-- <img class="card-img-top" src="/user-image/{{this.user._id}}.jpg" width="200px" height="200px" alt="Card image cap"> --}}
+      <div class="card-body">
+         
+        <center>
+            
+          <h4 class="card-title"><b> Name:{{oneOrder.deliveryDetails.fisrtName}}</b></h4><br>
+         
+          <h5 class="card-text">Phone: {{oneOrder.deliveryDetails.address}}</h5><br>
+          <h5 class="card-text">Place: {{oneOrder.deliveryDetails.place}}</h5><br>
+          <h5 class="card-text">Pincode: {{oneOrder.deliveryDetails.pincode}}</h5><br>
+          <h5 class="card-text">Phone: {{oneOrder.deliveryDetails.number}}</h5><br>
+        </center>
+      
+      </div>
+    </div>
+  </div>
 </div>

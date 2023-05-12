@@ -18,17 +18,44 @@ paypal.configure({
 
 
 module.exports = {
+  // doSignup: (userData) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     userData.password = await bcrypt.hash(userData.password, 10);
+  //     db.get()
+  //       .collection(collection.USER_COLLECTIONS)
+  //       .insertOne(userData)
+  //       .then((data) => {
+  //         resolve(data.insertedId);
+  //       });
+  //   });
+  // },
   doSignup: (userData) => {
     return new Promise(async (resolve, reject) => {
-      userData.password = await bcrypt.hash(userData.password, 10);
-      db.get()
-        .collection(collection.USER_COLLECTIONS)
-        .insertOne(userData)
-        .then((data) => {
-          resolve(data.insertedId);
-        });
+
+      let user = await db
+          .get()
+          .collection(collection.USER_COLLECTIONS)
+          .findOne({ email: userData.email });
+        if (user) {
+          console.log('user exist');
+          console.log(user);
+
+          resolve({ status: true });
+        } else {
+          userData.password = await bcrypt.hash(userData.password, 10);
+          db.get()
+            .collection(collection.USER_COLLECTIONS)
+            .insertOne(userData)
+            .then((response) => {
+              resolve({ status: false });
+            });
+        }
+    
     });
   },
+
+
+
   doLogin: (userData) => {
     return new Promise(async (resolve, reject) => {
       let loginStatus = false;
@@ -38,25 +65,65 @@ module.exports = {
         .get()
         .collection(collection.USER_COLLECTIONS)
         .findOne({ email: userData.email });
-
-      if (user) {
-        bcrypt.compare(userData.password, user.password).then((status) => {
-          if (status) {
-            console.log("login success");
-            response.user = user;
-            response.status = true;
-            resolve(response);
-          } else {
-            console.log("login failed");
-            resolve({ status: false });
-          }
-        });
-      } else {
-        console.log("login failed");
-        resolve({ status: false });
+        console.log(user);
+        //new one fror user block working
+        if(user){
+        if(user.isblocked){
+          response.blocked=true
+          
+          resolve(response)
+        }else{
+          bcrypt.compare(userData.password,user.password).then((status)=>{
+            console.log((status,"st"));
+            if(status){
+              console.log("login success");
+              response.user=user
+              response.status=true
+              resolve(response)
+            }else{
+              console.log("login failed");
+              resolve({status:false})
+            }
+          })
+        }
+      }else{
+        console.log("no user");
+        resolve({status:false})
       }
+
+
+
+      // if (user) {
+      //   bcrypt.compare(userData.password, user.password).then((status) => {
+      //     if (status) {
+      //       console.log("login success");
+      //       response.user = user;
+      //       response.status = true;
+      //       resolve(response);
+      //     } else {
+      //       console.log("login failed");
+      //       resolve({ status: false });
+      //     }
+      //   });
+      // } else {
+      //   console.log("login failed");
+      //   resolve({ status: false });
+      // }
     });
   },
+  isblocked: (id) => {
+    return new Promise(async (resolve, reject) => {
+      let user = await db
+        .get()
+        .collection(collection.USER_COLLECTIONS)
+        .findOne({ _id: objectId(id) });
+      resolve(user);
+    });
+  },
+
+
+  
+
   getAllusers: () => {
     return new Promise(async (resolve, reject) => {
       let users = await db
@@ -388,15 +455,20 @@ module.exports = {
             },
           },
           {
+            $addFields: {
+              numericField: { $toInt: "$product.price" } // Convert "stringField" to an integer
+            }
+          },
+          {
             $group: {
               _id: null,
-              total: { $sum: { $multiply: ["$quantity", "$product.price"] } },
+              total: { $sum: { $multiply: ["$quantity", "$numericField"] } },
             },
           },
         ])
         .toArray();
       if (total.length > 0) {
-        resolve(total[0].total);
+        resolve(total[0]?.total);
       } else {
         console.log("=============================");
         resolve(0);
@@ -484,38 +556,7 @@ module.exports = {
 })
 },
 
-  // placeOrder:(order,products,total)=>{
-  //     return new Promise((resolve, reject) => {
-  //         console.log('api call');
-  //         let status =
-  //         order["payment-method"] === "COD" ||
-  //         order["payment-method"] === "paypal" ||
-  //         order["payment-method"] === "wallet"
-  //         ? "placed"
-  //          : {pending:true};
-
-  //         let orderObj={
-  //             deliveryDetails:{
-  //                 name:order.fname,
-  //                 mobile:order.mobile,
-  //                 address:order.address,
-  //                 pincode:order.pincode
-
-  //             },
-  //             userId:objectId(order.userId),
-  //             paymentMethod:order['payment-method'],
-  //             products:products,
-  //             totalAmount:total,
-  //             status:status,
-  //             date:new Date()
-  //         }
-  //         db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
-  //             db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
-  //             resolve()
-  //         })
-  //     })
-  // },
-
+  
   getCartProductList: (userId) => {
     return new Promise(async (resolve, reject) => {
       console.log(userId);
@@ -769,41 +810,6 @@ module.exports = {
         })
     },
 
-    //return order
-
-    // returnOrder: (id) => {
-    //   return new Promise(async (resolve, reject) => {
-    //     let order = await db
-    //       .get()
-    //       .collection(collection.ORDER_COLLECTION)
-    //       .findOne({ _id: objectId(id) });
-    //     db.get()
-    //       .collection(collection.USER_COLLECTIONS)
-    //       .updateOne(
-    //         { _id:objectId(order.userId)},
-    //         {
-    //           $inc: {
-    //             wallet: order.totalAmount,
-    //           },
-    //         }
-    //       )
-    //       .then(() => {
-    //         db.get()
-    //           .collection(collection.ORDER_COLLECTION)
-    //           .updateOne(
-    //             { _id: objectId(id) },
-    //             {
-    //               $set: {
-    //                 is_returned: true,
-    //                 status: "returned",
-    //                 returnedDate: new Date(),
-    //               },
-    //             }
-    //           );
-    //       });
-    //     resolve();
-    //   });
-    // },
     returnOrder: (id) => {
       return new Promise(async (resolve, reject) => {
         let order = await db.get().collection(collection.ORDER_COLLECTION).findOne({ _id: objectId(id) });
@@ -868,33 +874,7 @@ module.exports = {
 
 
 
-    // add to wishlist
-    // addToWish:(prodId,userId)=>{
-    //   return new Promise(async(resolve, reject) => {
-    //     try{
-    //       let wishlist= await db.get().collection(collection.WISHLIST_COLLECTION).findOne({user:objectId(userId)})
-    //       if(wishlist){
-    //         db.get().collection(collection.WISHLIST_COLLECTION).updateOne({user:objectId(userId)},
-    //         {$push:{products:objectId(prodId)}}).then((response)=>{
-    //           resolve()
-    //         })
   
-    //       }else{
-    //         let wishObj={
-    //           user:objectId(userId),
-    //           product:[objectId(prodId)]
-    //         }
-    //         db.get().collection(collection.WISHLIST_COLLECTION).insertOne(wishObj).then((response)=>{
-    //           resolve()
-    //         })
-    //       }
-    //     }catch{
-    //       resolve(0)
-    //     }
-       
-    //   })
-    // },
-
 //...........
     addToWish: (proId, userId) => {
       let proObj = {
@@ -1166,6 +1146,68 @@ module.exports = {
       }
       })
   },
+
+  //forgotpassword
+  
+  forgotPassword: (userEmail) => {
+    return new Promise(async (resolve, reject) => {
+      let user = await db
+        .get()
+        .collection(collection.USER_COLLECTIONS)
+        .findOne({ email: userEmail.email });
+
+      if (user) {
+        if (user.isblocked) {
+          resolve({ blocked: true });
+        } else {
+          resolve(user);
+        }
+      } else {
+        resolve({ noUser: true });
+      }
+    });
+  },
+
+  changePassword: (userData) => {
+    return new Promise(async (resolve, reject) => {
+      if (userData.password === userData.cpassword) {
+        db.get()
+          .collection(collection.USER_COLLECTIONS)
+          .findOne({ email: userData.email });
+
+        userData.password = await bcrypt.hash(userData.cpassword, 10);
+        userData.cpassword = await bcrypt.hash(userData.cpassword, 10);
+        // console.log("o7898765");
+        // console.log(userData);
+        db.get()
+          .collection(collection.USER_COLLECTIONS)
+          .updateOne(
+            { email: userData.email },
+            {
+              $set: {
+                password: userData.password,
+                cpassword: userData.cpassword,
+              },
+            }
+          )
+          .then((responce) => {
+            resolve({ status: true });
+          });
+      } else {
+        resolve({ status: false });
+      }
+    });
+  },
+
+
+  viewUserCat:()=>{
+    return new Promise(async(resolve, reject) => {
+        let catgy = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
+        console.log(catgy,"ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+        resolve(catgy)
+    })
+},
+
 
 
 

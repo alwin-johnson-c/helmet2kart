@@ -1,3 +1,4 @@
+const { log } = require('handlebars');
 const adminHelpers = require('../../helpers/admin-helpers');
 var productHelpers =require('../../helpers/product-helpers');
 const userHelpers = require('../../helpers/user-helpers');
@@ -41,25 +42,44 @@ const client = require('twilio')(accountSid,authToken);
 var homePage = async (req, res) => {
   let todayDate = new Date().toISOString().slice(0, 10);
   var startCouponOffer = await userHelpers.startCouponOffer(todayDate);
-  // let startProductOffer=await  productHelpers.startProductOffer(todayDate);
+  let startProductOffer=await  productHelpers.startProductOffer(todayDate);
   let banner= await adminHelpers.getAllBanners()
+  let catgy=await userHelpers.viewUserCat(catgy)
+  console.log(catgy,"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
   let user = req.session.user;
   console.log(user);
   let cartCount = null;
   if (req.session.user) {
     todayDate = new Date().toISOString().slice(0, 10);
     startCouponOffer = await userHelpers.startCouponOffer(todayDate);
-    // startProductOffer=await  productHelpers.startProductOffer(todayDate);
+   startProductOffer=await  productHelpers.startProductOffer(todayDate);
     cartCount = await userHelpers.getCartCount(req.session.user._id);
   }
-   productHelpers.getAllProducts().then((products) => {
-    res.render('user/user-homePage', { products, user, cartCount,banner });
+  // let productOffer= await adminHelpers.ProductOffers()
+  // console.log(productOffer.product+'productOffer {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{');
+    productHelpers.getAllProducts().then((products) => {
+    console.log(banner);
+    res.render('user/user-homePage', { products, user, cartCount,banner,catgy});
+
   });
 };
 
-  const userSingup = (req,res)=>{
-    res.render('user/signup')
+  // const userSingup = (req,res)=>{
+  //   res.render('user/signup')
+  // };
+
+
+  const userSingup= (req, res) => {
+    let cartCount = 0;
+    // let wishCount = 0;
+
+    let error = req.session.error;
+    let passEr = req.session.passError;
+    res.render("user/signup", { error, passEr, cartCount,  });
+    req.session.error = false;
+    req.session.passError = false;
   };
+
 
   const userLogin = (req,res)=>{
         // session handling
@@ -73,12 +93,34 @@ var homePage = async (req, res) => {
       };
 
 
-  const signupPost =(req,res)=>{
-        userHelpers.doSignup(req.body).then(()=>{
+  // const signupPost =(req,res)=>{
+  //       userHelpers.doSignup(req.body).then((response)=>{
+  //         console.log(response);
+  //         if (response.status) {
+  //           req.session.exist=true
+  //           req.session.error = "Email Alredy Submited";
+  //           res.redirect("/signup");
+  //         }else{
+  //           res.redirect('/login')
+
+  //         }
       
-         res.redirect('/login')
-        })
-      };
+         
+  //       })
+  //     };
+   const signupPost= (req, res) => {
+    userHelpers.doSignup(req.body).then((response) => {
+      if (response.status) {
+        req.session.error = "Email Alredy Submited";
+        res.redirect("/signup");
+      } else if (response.pwNotSame) {
+        req.session.passError = "Password Not Match";
+        res.redirect("/signup");
+      } else {
+        res.redirect("/login");
+      }
+    });
+  };
 
 
    const otpGet =(req,res)=>{
