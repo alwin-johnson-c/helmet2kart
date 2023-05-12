@@ -44,7 +44,7 @@ var homePage = async (req, res) => {
   var startCouponOffer = await userHelpers.startCouponOffer(todayDate);
   let startProductOffer=await  productHelpers.startProductOffer(todayDate);
   let banner= await adminHelpers.getAllBanners()
-  let catgy=await userHelpers.viewUserCat(catgy)
+  let catgy=await userHelpers.viewUserCat()
   console.log(catgy,"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
   let user = req.session.user;
   console.log(user);
@@ -236,7 +236,7 @@ var homePage = async (req, res) => {
   // view product
 const productView=async(req,res)=>{
   let id =req.params.id
-  console.log(id)
+ 
   let prod = await productHelpers.getOneProduct(id)
   res.render('user/shop',{prod,user:req.session.user})
    }
@@ -247,10 +247,7 @@ const productView=async(req,res)=>{
 const cartGet= async(req,res)=>{
   let products = await userHelpers.getCartProducts(req.session.user._id)
  let totalValue= await userHelpers.getTotalAmount(req.session.user._id) 
-  console.log("/////////",products);
-  console.log("/////////",req.session.user);
-  console.log("/////////",totalValue);
-  console.log('kkkk');
+ 
   res.render('user/cart',{products,user:req.session.user,totalValue})
 }
 
@@ -275,8 +272,7 @@ const getPlaceOrder=async(req,res)=>{
 
 
 const postPlaceOrder = async(req,res)=>{
-  console.log("inside place order-------");
-  console.log(req.body);
+ 
   let totalPrice=await userHelpers.getTotalAmount(req.body.userId)
 
   let products=await userHelpers.getCartProductList(req.body.userId)
@@ -289,9 +285,7 @@ const postPlaceOrder = async(req,res)=>{
 }
 
   userHelpers.placeOrder(req.body,products,totalPrice).then((response)=>{
-    console.log(req.body);
-    console.log("O0pppppppppppppppppppppppppppppppppp");
-    console.log("place order response");
+   
     let orderId = response
      if (req.body['payment-method'] === 'paypal') {
       console.log("============================");
@@ -311,7 +305,7 @@ const postPlaceOrder = async(req,res)=>{
 } 
 
 const postChangeProductQty=async (req, res) => {
-  console.log('huhiuhhjh');
+  
   console.log(req.body);
   let userId = req.body.user;
   count = req.body.count
@@ -329,14 +323,14 @@ const getOrderSucess=(req,res)=>{
 
 const getViewOrder= async(req,res)=>{
   let order= await userHelpers.getUserOrder(req.session.user._id)
-  console.log(order);
-  console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+  
+ 
   res.render("user/view-order",{user:req.session.user,order})
 }
 
 const getOrderProducts= async(req,res)=>{
   let products= await userHelpers.getOrderProducts(req.params.id)
-  console.log(products);
+ 
   res.render('user/view-order-products',{user:req.session.user,products})
 }
 
@@ -361,7 +355,7 @@ const getInvoice=async(req,res)=>{
   let invoice = await userHelpers.getUserInvoice(req.params.id);
   console.log(invoice);
   let product = await userHelpers.getOrderProducts(req.params.id);
-  console.log(product);
+  
   res.render('user/invoice',{user,invoice,product})
 }
 

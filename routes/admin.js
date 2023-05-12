@@ -83,46 +83,7 @@ router.get('/block-user/:id', blockUser)
  router.get('/admin-logout',verifyAdminLogin,logOut);
 
 
-//  router.post('/admin-signup',(req,res)=>{
-//   adminHelpers.doSignup(req.body).then((response)=>{
-//     console.log(response);
-//     res.render('admin/admin-login')
-//   })
-//  });
 
-
- 
- 
-  
-
-
-
-
-  // router.post('/edit-product/:id',(req,res)=>{
-  //   let id = req.params.id
-  //   productHelpers.updateProduct(req.params.id,req.body).then(()=>{
-  //     res.redirect('/admin')
-  //     if(req.files.image){
-  //       let image = req.files.image
-  //       image.mv('./public/product-images/'+id+'.jpg')
-  //     }
-     
-  //   })
-  // });
-
-// router.get('/delete-user/:id',deleteUserGet );
-
-//   router.get('/edit-user/:id',async(req,res)=>{
-//     let users= await userHelpers.getAlluserDetails(req.params.id)
-//     console.log(users);
-//     res.render('admin/edit-user',{users})
-  
-//   });
-//   router.post('/edit-user/:id',(req,res)=>{
-//     userHelpers.updateuser(req.params.id,req.body).then(()=>{
-//       res.redirect('/admin')
-//     })
-//   });
 
   //category
   router.get('/add-category',addCategoryGet );
@@ -151,14 +112,10 @@ router.post('/edit-category/:id', (req, res) => {
   })
 })
 
-// router.put('/edit-category/:id', (req, res) => {
-//   const categoryId = req.params.id;
-//   const updatedCategory = req.body;
 
 //   // Call a function to update the category in the database using categoryId and updatedCategory
 
-//   res.redirect('/admin/view-category');
-// });
+
 
 router.get('/delete-category/:id',(req,res)=>{
 
@@ -255,7 +212,7 @@ router.get('/coupon-management',verifyAdminLogin, async (req, res) => {
 })
 
 router.get('/add-coupon',verifyAdminLogin,(req,res)=>{
-  res.render('admin/add-coupon',{admin:req.session.admin})
+  res.render('admin/add-coupon',{admin:req.session.admin,admin:true})
 })
 
 router.post('/add-coupon',verifyAdminLogin,(req, res) => {
@@ -388,7 +345,7 @@ router.post('/product-offers',verifyAdminLogin,async (req, res) => {
 router.get('/edit-prodOffer/:_id', verifyAdminLogin,async (req, res) => {
   let proOfferId = req.params._id;
   let proOffer = await adminHelpers.getProdOfferDetails(proOfferId);
-  res.render("admin/edit-prodOffer", { admin: true, proOffer });
+  res.render("admin/edit-prodOffer", { admin: true, proOffer,admin:req.session.admin });
 });
 
 router.post('/edit-prodOffer/:_id',verifyAdminLogin,(req, res) => {

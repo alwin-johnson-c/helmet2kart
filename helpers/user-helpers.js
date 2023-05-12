@@ -37,9 +37,6 @@ module.exports = {
           .collection(collection.USER_COLLECTIONS)
           .findOne({ email: userData.email });
         if (user) {
-          console.log('user exist');
-          console.log(user);
-
           resolve({ status: true });
         } else {
           userData.password = await bcrypt.hash(userData.password, 10);
@@ -65,7 +62,6 @@ module.exports = {
         .get()
         .collection(collection.USER_COLLECTIONS)
         .findOne({ email: userData.email });
-        console.log(user);
         //new one fror user block working
         if(user){
         if(user.isblocked){
@@ -74,43 +70,31 @@ module.exports = {
           resolve(response)
         }else{
           bcrypt.compare(userData.password,user.password).then((status)=>{
-            console.log((status,"st"));
+           
             if(status){
               console.log("login success");
               response.user=user
               response.status=true
               resolve(response)
             }else{
-              console.log("login failed");
+             
               resolve({status:false})
             }
           })
         }
       }else{
-        console.log("no user");
+       
         resolve({status:false})
       }
 
 
 
-      // if (user) {
-      //   bcrypt.compare(userData.password, user.password).then((status) => {
-      //     if (status) {
-      //       console.log("login success");
-      //       response.user = user;
-      //       response.status = true;
-      //       resolve(response);
-      //     } else {
-      //       console.log("login failed");
-      //       resolve({ status: false });
-      //     }
-      //   });
-      // } else {
-      //   console.log("login failed");
-      //   resolve({ status: false });
-      // }
+     
     });
   },
+
+
+
   isblocked: (id) => {
     return new Promise(async (resolve, reject) => {
       let user = await db
@@ -131,14 +115,15 @@ module.exports = {
         .collection(collection.USER_COLLECTIONS)
         .find()
         .toArray();
-      console.log(users);
+     
       resolve(users);
     });
   },
+
+
   deleteuser: (userId) => {
     return new Promise((resolve, reject) => {
-      console.log(userId);
-      console.log(objectId(userId));
+     
       db.get()
         .collection(collection.USER_COLLECTIONS)
         .removeOne({ _id: objectId(userId) })
@@ -147,6 +132,7 @@ module.exports = {
         });
     });
   },
+
   getAlluserDetails: (userId) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -157,6 +143,7 @@ module.exports = {
         });
     });
   },
+
   updateuser: (userId, userDetails) => {
     return new Promise((resolve, reject) => {
       db.get()
@@ -302,7 +289,7 @@ module.exports = {
             },
           ])
           .toArray();
-        console.log(cartItems);
+        
         resolve(cartItems);
       } catch {
         resolve(0);
@@ -310,40 +297,16 @@ module.exports = {
     });
   },
 
-  //  changeProductQuantity:(details)=>{
-  //     console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-  //     details.count=parseInt(details.count)
-  //     details.quantity=parseInt(details.quantity)
-
-  //     return new Promise((resolve, reject) => {
-  //         if(details.count==-1 && details.quantity==1){
-  //             db.get().collection(collection.CART_COLLECTION)
-  //             .updateOne({_id:objectId(details.cart)},
-  //             {
-  //                 $pull:{products:{item:objectId(details.product)}}
-  //             }).then((response)=>{
-  //                 resolve({removeProduct:true})
-  //             })
-  //         }else{
-  //             db.get().collection(collection.CART_COLLECTION)
-  //             .updateOne({ _id: objectId(details.cart), 'products.item': objectId(details.product) },
-  //                         {
-  //                             $inc: { 'products.$.quantity': details.count }
-  //                        }).then((response) => {
-  //             resolve({status:true})
-  //          })
-  //     }
-  // })
-  //  },
+  
 
   changeProductQuantity: (details) => {
-    console.log(details);
+   
     details.count = parseInt(details.count);
     details.quantity = parseInt(details.quantity);
-    console.log(details);
+   
     return new Promise(async (resolve, reject) => {
       if (details.count == -1 && details.quantity == 1) {
-        console.log("ttttttttttttttttttttttt");
+      
         db.get()
           .collection(collection.CART_COLLECTION)
           .updateOne(
@@ -356,7 +319,7 @@ module.exports = {
             resolve({ itemRemoved: true });
           });
       } else {
-        console.log("wwwwwwwwwwwwwwwwwwww");
+       
         db.get()
           .collection(collection.CART_COLLECTION)
           .updateOne(
@@ -369,58 +332,14 @@ module.exports = {
             }
           )
           .then((response) => {
-            console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-            console.log(response);
+           
             resolve({ status: true });
           });
       }
     });
   },
 
-  // getTotalAmount:(userId)=>{
-  //     return new Promise(async (resolve, reject) => {
-  //         try{
-  //         let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
-  //             {
-  //                 $match: { user: objectId(userId) }
-  //             },
-  //             {
-  //                 $unwind: '$products'
-  //             },
-  //             {
-  //                 $project: {
-  //                     item: '$products.item',
-  //                     quantity: '$products.quantity',
-  //                 }
-  //             },
-  //             {
-  //                 $lookup: {
-  //                     from: collection.PRODUCT_COLLECTIONS,
-  //                     localField: 'item',
-  //                     foreignField: '_id',
-  //                     as: 'product'
-  //                 }
-  //             },
-  //             {
-  //                 $project: {
-  //                     item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-  //                 }
-  //             },
-  //             {
-  //                 $group:{
-  //                     _id:null,
-  //                     total:{$sum:{$multiply:['$quantity','$product.price']}}
-  //                 }
-  //             }
-  //         ]).toArray()
-  //         console.log(total);
-  //         resolve(total[0].total)
-  //     }catch{
-  //         resolve(0)
-  //     }
-  //     })
-  // },
-
+ 
   getTotalAmount: (userId) => {
     return new Promise(async (resolve, reject) => {
       let total = await db
@@ -470,7 +389,7 @@ module.exports = {
       if (total.length > 0) {
         resolve(total[0]?.total);
       } else {
-        console.log("=============================");
+       
         resolve(0);
       }
     });
@@ -559,12 +478,12 @@ module.exports = {
   
   getCartProductList: (userId) => {
     return new Promise(async (resolve, reject) => {
-      console.log(userId);
+     
       let cart = await db
         .get()
         .collection(collection.CART_COLLECTION)
         .findOne({ user: objectId(userId) });
-      console.log(cart);
+      
       resolve(cart.products);
     });
   },
@@ -595,7 +514,7 @@ module.exports = {
   },
   // ordered product details
   getOrderProducts: (orderId) => {
-    console.log(orderId);
+   
     return new Promise(async (resolve, reject) => {
       let orderItems = await db
         .get()
@@ -630,8 +549,6 @@ module.exports = {
           },
         ])
         .toArray();
-      console.log(orderItems);
-      console.log("nnnnnnnnnnnnnnnnn");
       resolve(orderItems);
     });
   },
@@ -697,8 +614,8 @@ module.exports = {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://localhost:3003/order-success",
-                    "cancel_url": "http://localhost:3003/place-order"
+                    "return_url": "https://helmet2kart.online/order-success",
+                    "cancel_url": "https://helmet2kart.online/place-order"
                 },
                 "transactions": [{
                     "item_list": {
@@ -721,8 +638,7 @@ module.exports = {
                 if (error) {
                     throw error;
                 } else {
-                    console.log("Create Payment Response");
-                    console.log(payment.links[1].href);
+                   
                     resolve(payment.links[1].href)
                 }
             });
@@ -795,7 +711,7 @@ module.exports = {
     //invoice 
     getUserInvoice:(orderId)=>{
         return new Promise(async(resolve, reject) => {
-            console.log(orderId);
+           
             let orders= await db.get().collection(collection.ORDER_COLLECTION)
             .find({_id:objectId(orderId)},{sort:{date:-1}}).toArray();
             var i;
@@ -889,7 +805,7 @@ module.exports = {
           let productExist = userWish.products.findIndex(
             (product) => product.item == proId
           );
-          // console.log(productExist);
+         
           if (productExist != -1) {
             db.get()
               .collection(collection.WISHLIST_COLLECTION)
@@ -905,7 +821,7 @@ module.exports = {
                   $pull:{ wishlist: {user: objectId(userId)}}
                 })
                 .then((res)=>{
-                  console.log(res);
+                 
                   reject();
                 })
               });
@@ -995,7 +911,7 @@ module.exports = {
               },
             ])
             .toArray();
-          console.log(wishlistItems);
+          
           resolve(wishlistItems);
         } catch {
           resolve(0);
@@ -1019,53 +935,7 @@ module.exports = {
       });
     },
    
-    // validateCoupon: (data, userId, totalAmount) => {
-    //   return new Promise(async (resolve, reject) => {
-    //     try {
-    //      let obj = {};
-    //       let date = new Date();
-    //       let coupon = await db
-    //         .get()
-    //         .collection(collection.COUPON_COLLECTION)
-    //         .findOne({ coupon: data.coupon, Available: true });
-    //       if (coupon) {
-    //         // console.log('coupon available');
-    //         let users = coupon.users;
-    //         let userCheck = users.includes(userId);
-    //         if (userCheck) {
-    //           console.log("coupon used");
-    //           obj.couponUsed = true;
-    //           resolve(obj);
-    //         } else {
-    //           // console.log("coupon valid");
-    //           // console.log(date);
-    //           // console.log(coupon.endDateIso);
-    //           if (date <= coupon.endDateIso) {
-    //             let total = parseInt(totalAmount);
-    //             let percentage = parseInt(coupon.offer);
-  
-    //             let discountValue = Math.floor((total * percentage) / 100);
-    //             obj.total = total - discountValue;
-    //             obj.success = true;
-    //             obj.discountValue = discountValue;
-    //             resolve(obj);
-    //           } else {
-    //             // console.log("coupon expired");
-    //             obj.couponExpired = true;
-    //             resolve(obj);
-    //           }
-    //         }
-    //       } else {
-    //         // console.log("coupon invalid");
-    //         obj.invalidCoupon = true;
-    //         resolve(obj);
-    //       }
-    //     } catch (error) {
-    //       console.log(error.message);
-    //       reject(error);
-    //     }
-    //   });
-    // },
+   
     validateCoupon: (data, userId,totalAmount) => {
       return new Promise(async (resolve, reject) => {
           try{
@@ -1075,23 +945,23 @@ module.exports = {
           let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ coupon: data.coupon, Available: true })
           if (coupon) {
               
-              console.log('coupon available');
+             
               let users = coupon.users
               let userCheck = users.includes(userId)
               if (userCheck) {
-                  console.log('coupon used');
+                 
                   obj.couponUsed = true
                   obj.offer = coupon.offer
                   resolve(obj) 
               } else {
-                  console.log("coupon valid");
+                
                   console.log("coupon valid ",coupon);
 
                   obj.offer = coupon.offer
                   obj.coupon = coupon.coupon
                   obj.couponId = coupon._id
 
-                  console.log(date);
+                 
                   console.log(coupon.endDateIso);
                   if (date <= coupon.endDateIso) {
                       let total = parseInt(totalAmount)
@@ -1124,7 +994,7 @@ module.exports = {
       console.log(couponStartDate);
       return new Promise(async (resolve, reject) => {
           try{
-          let data = await db.get().collection(collection.COUPON_COLLECTION).find({ startDateIso: { $lte: couponStartDate } }).toArray();
+          let data = await db.get().collection(collection.COUPON_COLLECTION).find({startDateIso: { $lte: couponStartDate }}).toArray();
           console.log(data);
           if (data) {
               await data.map(async (oneData) => {
@@ -1141,7 +1011,7 @@ module.exports = {
               resolve()
           }
       }catch{
-          console.log('catched err');
+         
           resolve(0)
       }
       })
@@ -1226,3 +1096,123 @@ module.exports = {
         //   });
 
 
+         // getTotalAmount:(userId)=>{
+  //     return new Promise(async (resolve, reject) => {
+  //         try{
+  //         let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+  //             {
+  //                 $match: { user: objectId(userId) }
+  //             },
+  //             {
+  //                 $unwind: '$products'
+  //             },
+  //             {
+  //                 $project: {
+  //                     item: '$products.item',
+  //                     quantity: '$products.quantity',
+  //                 }
+  //             },
+  //             {
+  //                 $lookup: {
+  //                     from: collection.PRODUCT_COLLECTIONS,
+  //                     localField: 'item',
+  //                     foreignField: '_id',
+  //                     as: 'product'
+  //                 }
+  //             },
+  //             {
+  //                 $project: {
+  //                     item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+  //                 }
+  //             },
+  //             {
+  //                 $group:{
+  //                     _id:null,
+  //                     total:{$sum:{$multiply:['$quantity','$product.price']}}
+  //                 }
+  //             }
+  //         ]).toArray()
+  //         console.log(total);
+  //         resolve(total[0].total)
+  //     }catch{
+  //         resolve(0)
+  //     }
+  //     })
+  // },
+
+ // validateCoupon: (data, userId, totalAmount) => {
+    //   return new Promise(async (resolve, reject) => {
+    //     try {
+    //      let obj = {};
+    //       let date = new Date();
+    //       let coupon = await db
+    //         .get()
+    //         .collection(collection.COUPON_COLLECTION)
+    //         .findOne({ coupon: data.coupon, Available: true });
+    //       if (coupon) {
+    //         // console.log('coupon available');
+    //         let users = coupon.users;
+    //         let userCheck = users.includes(userId);
+    //         if (userCheck) {
+    //           console.log("coupon used");
+    //           obj.couponUsed = true;
+    //           resolve(obj);
+    //         } else {
+    //           // console.log("coupon valid");
+    //           // console.log(date);
+    //           // console.log(coupon.endDateIso);
+    //           if (date <= coupon.endDateIso) {
+    //             let total = parseInt(totalAmount);
+    //             let percentage = parseInt(coupon.offer);
+  
+    //             let discountValue = Math.floor((total * percentage) / 100);
+    //             obj.total = total - discountValue;
+    //             obj.success = true;
+    //             obj.discountValue = discountValue;
+    //             resolve(obj);
+    //           } else {
+    //             // console.log("coupon expired");
+    //             obj.couponExpired = true;
+    //             resolve(obj);
+    //           }
+    //         }
+    //       } else {
+    //         // console.log("coupon invalid");
+    //         obj.invalidCoupon = true;
+    //         resolve(obj);
+    //       }
+    //     } catch (error) {
+    //       console.log(error.message);
+    //       reject(error);
+    //     }
+    //   });
+    // },
+
+
+
+
+    //  changeProductQuantity:(details)=>{
+  //     console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+  //     details.count=parseInt(details.count)
+  //     details.quantity=parseInt(details.quantity)
+
+  //     return new Promise((resolve, reject) => {
+  //         if(details.count==-1 && details.quantity==1){
+  //             db.get().collection(collection.CART_COLLECTION)
+  //             .updateOne({_id:objectId(details.cart)},
+  //             {
+  //                 $pull:{products:{item:objectId(details.product)}}
+  //             }).then((response)=>{
+  //                 resolve({removeProduct:true})
+  //             })
+  //         }else{
+  //             db.get().collection(collection.CART_COLLECTION)
+  //             .updateOne({ _id: objectId(details.cart), 'products.item': objectId(details.product) },
+  //                         {
+  //                             $inc: { 'products.$.quantity': details.count }
+  //                        }).then((response) => {
+  //             resolve({status:true})
+  //          })
+  //     }
+  // })
+  //  },

@@ -8,7 +8,7 @@ const { validateRequestWithBody } = require('twilio/lib/webhooks/webhooks');
 const viewProduct=(req,res)=>{
   
     productHelpers.getAllProducts().then((products)=>{
-      console.log(products);
+     
       res.render('admin/view-product',{products,admin:req.session.admin})
     })
 
@@ -50,7 +50,7 @@ const  viewAddProduct=(req,res)=>{
  const deleteAddProduct=  (req,res)=>{
     let proId = req.params.id
     
-    console.log(proId)
+  
     productHelpers.deleteProduct(proId).then((response)=>{
       res.redirect('/admin/view-product')
     })
@@ -58,14 +58,13 @@ const  viewAddProduct=(req,res)=>{
 
 
     const editProduct= async(req,res)=>{
-            console.log('sdsdsds');
+           
         
        
         let product = await  productHelpers.getProductDetails(req.params.id,req.body)
-        console.log(product)
+        
         let catResponce =await productHelpers. viewCategory()
-       console.log(catResponce);
-       console.log("llllpygvtfdrdred");
+      
 
         res.render('admin/edit-product',{product,admin:req.session.admin,catResponce})
       }
@@ -73,7 +72,7 @@ const  viewAddProduct=(req,res)=>{
 
  const editProductPost =(req,res)=>{
 
- console.log('editttttt');
+ 
     let id = req.params.id
     productHelpers.updateProduct(req.params.id,req.body).then(()=>{
       try{
@@ -113,7 +112,7 @@ const  viewAddProduct=(req,res)=>{
 
    const userGet=(req,res)=>{
     userHelpers.getAllusers().then((users)=>{
-     console.log(users);
+     
       res.render('admin/view-users',{users,admin:req.session.admin})
    
     })
@@ -133,9 +132,9 @@ const loginGet=(req,res)=>{
    }
 
 const signUpPost=(req,res)=>{
-    console.log(req.body);
+  
     adminHelpers.doSignup(req.body).then((response)=>{
-      console.log(response)
+     
      res.redirect('/admin/admin-login')
     })
     
@@ -165,7 +164,7 @@ const signUpPost=(req,res)=>{
 
   const deleteUserGet=(req,res)=>{
     let userId = req.params.id
-    console.log(userId)
+  
     userHelpers.deleteuser(userId).then((response)=>{
       res.redirect('/admin/')
     })
@@ -180,15 +179,12 @@ const signUpPost=(req,res)=>{
  const addCategoryPost=async(req,res)=>{
     let  category=await productHelpers.addCategory(req.body)
     res.render('admin/add-category',{category})
-    console.log(category);
+    
   }
 
 
 
  const editCategory=async(req,res)=>{
-
-    console.log('sdsdsd');
-
     let category=await productHelpers.getOnecategory(req.params.id,req.body)
     console.log(category);
     res.render('admin/edit-category',{admin:true,category,admin:req.session.admin})
@@ -210,8 +206,7 @@ const signUpPost=(req,res)=>{
    const viewCategoryGet=(req,res)=>{
    
     productHelpers.viewCategory().then((catgy)=>{
-      console.log(catgy);
-      console.log("ggggggggggggggggggggggggg");
+     
       res.render('admin/view-category',{catgy,admin:req.session.admin})
     })
      }

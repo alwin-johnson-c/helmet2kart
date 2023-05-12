@@ -31,12 +31,12 @@ const { log } = require('handlebars')
                         response.status=true
                         resolve(response)
                     }else{
-                        console.log("login failed");
+                       
                         resolve({status:false})
                     }
                 })
             }else{
-                console.log("login failed");
+                
                 resolve({status:false});
             }
         })
@@ -76,7 +76,7 @@ const { log } = require('handlebars')
             for (i = 0; i < allOrders.length; i++) {
                 allOrders[i].date = moment(allOrders[i].date).format('lll');
             }
-            console.log(allOrders);
+           
             resolve(allOrders)
         })
     },
@@ -206,7 +206,7 @@ const { log } = require('handlebars')
           },
         ])
         .toArray();
-        console.log(orderItems);
+       
       resolve(orderItems);
     });
   },
@@ -320,7 +320,7 @@ const { log } = require('handlebars')
           },
         ])
         .toArray();
-      console.log(totalRevenue[0].totalAmount);
+      
       resolve(totalRevenue[0].totalAmount);
     });
   },
@@ -629,8 +629,9 @@ const { log } = require('handlebars')
       }
     })
   },
+
   editCoupon:(data)=>{
-    console.log(data);
+   
     return new Promise((resolve, reject) => {
       try{
 
@@ -715,7 +716,7 @@ addBanner:(data)=>{
               offer:bannId.offer,
             }
           }).then((response)=>{
-            console.log(response+"ffffffffffffffffffffffffffffffffff");
+           
             resolve(response)
           })
 
@@ -888,12 +889,18 @@ deleteOffer: (proOfferId) => {
     return new Promise(async (resolve, reject) => {
         
       let products = await db.get().collection(collection.PRODUCT_COLLECTIONS).find({offer:true}).toArray();
-      console.log(products);
-      console.log("????????????????????????????////");
+     
       resolve(products);
    
   });
 },
+
+
+}
+
+   
+
+
 
 // ProductOffers:()=>{
   
@@ -909,9 +916,3 @@ deleteOffer: (proOfferId) => {
 //     });
 
 // }
-
-  }
- 
-   
- 
-
