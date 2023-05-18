@@ -369,6 +369,194 @@ const returnOrderGet=  async(req,res)=>{
   })
 }
 
+//wishlist get
+const wishListGet=async(req,res)=>{
+  if(req.session.user){
+  let products= await userHelpers.getWishlistProduct(req.session.user._id)
+  console.log("LLLLLLLLLLLLLLL"+products);
+  console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+  res.render('user/wishlist',{user:req.session.user,products})
+} 
+}
+
+//addtowishlist get
+const addToWishListGet =(req, res) => {
+  userHelpers .addToWish(req.params.id, req.session.user._id)
+     .then(() => {
+       res.json({ add: true });
+     })
+     .catch(() => {
+       res.json({ remove: true });
+     });
+ }
+
+const deleteWishList=(req, res) => {
+  let proId = req.params.proId;
+  let wishId = req.params.wishId;
+  console.log(proId+"PPPpppppppppppppppppppppp");
+  console.log(wishId+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+  userHelpers.deleteWishlist(proId, wishId).then(() => {
+    res.json({ status: true });
+  });
+}
+
+
+const couponApplyPost=async(req,res)=>{
+  let id = req.session.user._id
+  let coupon = req.body.coupon
+  let totalAmount = await userHelpers.getTotalAmount(req.session.user._id);
+  userHelpers.validateCoupon(req.body,id,totalAmount).then((response)=>{
+    console.log(response);
+    console.log("/////////////////////////////////////////////////////////////////////");
+    req.session.couponTotal = response.total;
+    if(response.success){
+      console.log("sucess");
+      res.json({
+        couponSuccess: true,
+        total: response.total,
+        discountValue: response.discountValue,
+        coupon,
+      })
+    }else if(response.couponUsed){
+      res.json({couponUsed: true})
+    }else if(response.couponExpired){
+      console.log("expired");
+    }else{
+      res.json({invalidCoupon:true})
+    }
+
+  })
+}
+
+const offerOne=async(req,res)=>{
+  const id=req.params.id
+  console.log(id,'iddddddd');
+  let offer=await adminHelpers.offerUrl()
+  console.log(offer,'offer');
+  res.render('user/offer1',{user:req.session.user,id,offer})
+}
+
+const offerTwo=async(req,res)=>{
+  const id=req.params.id
+  console.log(id,'iddddddd');
+  let offer=await adminHelpers.offerUrl()
+  res.render('user/offer2',{user:req.session.user,offer})
+}
+
+const sortCategory=async(req,res)=>{
+  let catgy=await userHelpers.viewUserCat()
+  let sorting =await productHelpers.SortedProduct(req.query.category)
+  res.render('user/smk',{user:req.session.user,sorting,catgy})
+}
+
+const forgotPasswordGet=(req, res) => {
+  let cartCount = 0;
+  // let wishCount = 0;
+  res.render("user/forgot-password", {
+    FPBerr: req.session.FPblockErr,
+    FPUerr: req.session.FPnoUserErr,
+    passErr: req.session.pasErr,
+    cartCount,
+    // wishCount,
+  });
+  req.session.FPblockErr = false;
+  req.session.FPnoUserErr = false;
+  req.session.pasErr = false;
+}
+
+const forgotPasswordPost=async (req, res) => {
+  let cartCount = 0;
+  // let wishCount = 0;
+  await userHelpers.forgotPassword(req.body).then((response) => {
+    let email = response.email;
+    if (response.blocked) {
+      req.session.FPblockErr = "You Are Blocked";
+      res.redirect("/forgot-password");
+    } else if (response.noUser) {
+      req.session.FPnoUserErr = "Email Is Not Exist ";
+      res.redirect("/forgot-password");
+    } else {
+      res.render("user/repassword", { email, cartCount, });
+    }
+  });
+}
+
+const enterPasswordGet=(req, res) => {
+  res.render("user/repassword");
+}
+
+const enterPasswordPost=(req, res) => {
+  console.log(req.body);
+
+  userHelpers.changePassword(req.body).then((response) => {
+    if (response.status) {
+      res.redirect("/login");
+    } else {
+      req.session.pasErr = "Password Not Matched";
+      res.redirect("/forgot-password");
+    }
+  });
+}
+
+const cancelOrderGet=(req,res)=>{
+  console.log(req.params.id);
+    userHelpers.cancelOrder(req.params.id)
+    res.redirect('/view-order')
+  }
+
+  const profileGet=async (req, res) => {
+    let cartCount = 0;
+    
+    let user = req.session.user;
+    if (req.session.user) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id);
+     
+    }
+    oneUser = await userHelpers.getOneUser(req.session.user._id);
+    walletHistory = await userHelpers.getWalletHistory(req.session.user._id);
+    res.render('user/profile', {
+      oneUser,
+      cartCount,
+      
+      user,
+      walletHistory,
+    });
+  }
+
+  const searchGet=async (req, res) => {
+    let cartCount = 0;
+    // let wishCount = 0;
+    let user = req.session.user;
+    if (req.session.user) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id);
+      // wishCount = await userHelpers.getWishlistCount(req.session.user._id);
+    
+    }
+    res.render('user/search', { notShowB: true, cartCount, user });
+    
+  }
+
+
+
+  const searchPost=async (req, res) => {
+    let cartCount = 0;
+    console.log(req.body.search);
+    // let wishCount = 0;
+    
+    if (req.session.user) {
+      cartCount = await userHelpers.getCartCount(req.session.user._id);
+      // wishCount = await userHelpers.getWishlistCount(req.session.user._id);
+    }
+  
+    productHelpers.searchProduct(req.body.search).then((products) => {
+      res.render('user/searchedProduct', {
+        products,
+        // wishCount,
+        cartCount,
+        user:req.session.user
+      });
+    });
+  }
 
   module.exports =
    {
@@ -396,7 +584,22 @@ const returnOrderGet=  async(req,res)=>{
    editProfilePost,
    editProfileGet,
    getInvoice,
-   returnOrderGet
+   returnOrderGet,
+   wishListGet,
+   addToWishListGet,
+   deleteWishList,
+   couponApplyPost,
+   offerOne,
+   offerTwo,
+   sortCategory,
+   forgotPasswordGet,
+   forgotPasswordPost,
+   enterPasswordGet,
+   enterPasswordPost,
+   cancelOrderGet,
+   profileGet,
+   searchGet,
+   searchPost
   
   
   }

@@ -187,7 +187,7 @@ searchProduct: (pname) => {
       let proStartDateIso = new Date(date);
       try{
     return new Promise(async (resolve, reject) => {
-      let data = await db.get().collection(collection.PRODUCT_OFFERS).find({ startDateIso: { $lte: proStartDateIso } })
+      let data = await db.get().collection(collection.PRODUCT_OFFERS).find({startDateIso:{ $lte: proStartDateIso}})
         .toArray();
       if (data) {
         await data.map(async (onedata) => {
