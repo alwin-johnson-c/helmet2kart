@@ -153,7 +153,7 @@
             nameError.style.color = 'red'
             return false;
         }
-        if (name.length < 2) {
+        if (name.length < 2 || name.length >10) {
             nameError.innerHTML = 'Enter correct name';
             nameError.style.color = 'red'
             return false;
@@ -167,11 +167,16 @@
     function validatePrice() {
         var price = document.getElementById('price').value.trim();
 
-        if (price.length == 0) {
+        if (price.length == 0 ) {
             priceError.innerHTML = 'Price is Required';
             priceError.style.color = 'red'
             return false;
         }
+         if ( price < 0) {
+        priceError.innerHTML = 'Enter a valid positive price';
+        priceError.style.color = 'red';
+        return false;
+    }
         if (!price.match(/^[0-9 ]*$/)) {
             priceError.innerHTML = 'Enter numbers only';
             priceError.style.color = 'red'
@@ -191,6 +196,11 @@
             priceError.style.color = 'red'
             return false;
         }
+           if ( price < 0) {
+        priceError.innerHTML = 'Enter a valid positive price';
+        priceError.style.color = 'red';
+        return false;
+    }
         if (!price.match(/^[0-9 ]*$/)) {
             priceError.innerHTML = 'Enter numbers only';
             priceError.style.color = 'red'
