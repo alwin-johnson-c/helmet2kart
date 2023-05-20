@@ -153,7 +153,12 @@
             nameError.style.color = 'red'
             return false;
         }
-        if (name.length < 2 || name.length >10) {
+        if (name.length < 2 ) {
+            nameError.innerHTML = 'Enter correct name';
+            nameError.style.color = 'red'
+            return false;
+        }
+         if (name.length > 12 ) {
             nameError.innerHTML = 'Enter correct name';
             nameError.style.color = 'red'
             return false;
